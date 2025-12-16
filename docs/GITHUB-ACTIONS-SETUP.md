@@ -116,7 +116,7 @@ code-quality:
     
     - name: Upload Detekt Report
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: detekt-report
         path: build/reports/detekt/
