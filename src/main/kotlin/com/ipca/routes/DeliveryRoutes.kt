@@ -8,7 +8,7 @@ import java.util.Date
 @Serializable
 data class DeliveryRequest(
     val id: UUID,
-    val idScheduling: Integer,
+    val idScheduling: Int,
     val dateDelivery: Date,
     val status: String,
 )

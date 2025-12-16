@@ -1,7 +1,7 @@
 package com.ipca.services
 
-import com.ipca.dto.BeneficiaryDTO
-import com.ipca.dto.BeneficiaryRequest
+import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO
+import com.ipca.dto.Beneficiary.BeneficiaryRequest
 import com.ipca.models.BeneficiaryTable
 import com.ipca.models.SchedulingTable
 import com.ipca.models.DeliveryTable
@@ -11,10 +11,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object BeneficiaryService {
 
-    fun getAll(): List<BeneficiaryDTO> = transaction {
+    fun getAll(): List<BeneficiaryCreateDTO> = transaction {
         BeneficiaryTable.selectAll().map { row ->
-            BeneficiaryDTO(
-                idBeneficiary = row[BeneficiaryTable.id].value,
+            BeneficiaryCreateDTO(
                 name = row[BeneficiaryTable.name],
                 studentNumber = row[BeneficiaryTable.studentNumber],
                 email = row[BeneficiaryTable.email],
@@ -24,13 +23,12 @@ object BeneficiaryService {
         }
     }
 
-    fun getById(id: Int): BeneficiaryDTO? = transaction {
+    fun getById(id: Int): BeneficiaryCreateDTO? = transaction {
         BeneficiaryTable
-            .select { BeneficiaryTable.id eq id }
+            .select { BeneficiaryTable.studentNumber eq id }
             .singleOrNull()
             ?.let { row ->
-                BeneficiaryDTO(
-                    idBeneficiary = row[BeneficiaryTable.id].value,
+                BeneficiaryCreateDTO(
                     name = row[BeneficiaryTable.name],
                     studentNumber = row[BeneficiaryTable.studentNumber],
                     email = row[BeneficiaryTable.email],

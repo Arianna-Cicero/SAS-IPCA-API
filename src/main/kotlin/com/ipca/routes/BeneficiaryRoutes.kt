@@ -1,6 +1,6 @@
 package com.ipca.routes
 
-import com.ipca.dto.BeneficiaryRequest
+import com.ipca.dto.Beneficiary.BeneficiaryRequest
 import com.ipca.services.BeneficiaryService
 import io.ktor.server.application.*
 import io.ktor.server.routing.*

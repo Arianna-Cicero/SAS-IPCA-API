@@ -1,4 +1,4 @@
-package com.ipca.routes
+package com.ipca.integration.routes
 
 import io.ktor.client.request.*
 import io.ktor.client.statement.*

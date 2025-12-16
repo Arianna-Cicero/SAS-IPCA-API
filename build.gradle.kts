@@ -50,6 +50,10 @@ dependencies {
 
     // Code quality
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.5")
+
+    //swagger
+    implementation("io.ktor:ktor-server-openapi-jvm:${ktorVersion}")
+    implementation("io.ktor:ktor-server-swagger-jvm:${ktorVersion}")
 }
 
 application {
@@ -71,6 +75,7 @@ tasks.jacocoTestReport {
 }
 
 // Detekt configuration
+
 detekt {
     config.setFrom(files("config/detekt/detekt.yml"))
     autoCorrect = false

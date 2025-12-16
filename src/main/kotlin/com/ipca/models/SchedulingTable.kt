@@ -7,8 +7,8 @@ import java.util.UUID
 
 object SchedulingTable : Table("Scheduling"){
     val id = integer("id_scheduling").autoIncrement()
-    val idBeneficiary = integer("id_beneficiary").references(BeneficiaryTable.id, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.CASCADE)
-    val idCollaborator = uuid("id_collaborator").references(CollaboratorTable.id, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.SET_NULL)
+    val idBeneficiary = integer("id_beneficiary").references(BeneficiaryTable.studentNumber, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.CASCADE)
+    val idCollaborator = uuid("id_collaborator").references(CollaboratorTable.id_collaborator, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.SET_NULL)
     val dateDelivery = date("date_delivery")
     val status = varchar("status", 120).nullable()
 

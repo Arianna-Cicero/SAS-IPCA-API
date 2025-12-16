@@ -9,7 +9,7 @@ object ActivityLogTable : Table("Activity_Log") {
     val id = integer("id_log").autoIncrement()
 
     val collaboratorId = uuid("id_collaborator")
-        .references(CollaboratorTable.id, onDelete = ReferenceOption.NO_ACTION)
+        .references(CollaboratorTable.id_collaborator, onDelete = ReferenceOption.NO_ACTION)
 
     val entityId = integer("id_entity")
         .references(EntityTable.id, onDelete = ReferenceOption.NO_ACTION)

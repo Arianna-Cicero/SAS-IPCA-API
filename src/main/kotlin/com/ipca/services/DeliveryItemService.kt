@@ -7,8 +7,8 @@ import java.util.UUID
 
 data class DeliveryItemDTO(
     val idDelivery: UUID,
-    val idGood: Integer,
-    val quantity: Integer
+    val idGood: Int,
+    val quantity: Int
 )
 
 object DeliveryItemService {

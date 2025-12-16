@@ -1,10 +1,9 @@
-package com.ipca.dto
+package com.ipca.dto.Beneficiary
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BeneficiaryDTO(
-    val idBeneficiary: Int,
+data class BeneficiaryRequest(
     val name: String,
     val studentNumber: Int,
     val email: String,

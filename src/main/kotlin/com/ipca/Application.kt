@@ -21,6 +21,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.insert
 import io.ktor.server.auth.*
+import io.ktor.server.plugins.openapi.*
+import io.ktor.server.plugins.swagger.*
+
+
 
 
 fun main() {
@@ -31,6 +35,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
+
 
     DatabaseFactory.init()
     configureAuth()
@@ -46,7 +51,13 @@ fun Application.module() {
     }
 
 
+
+
+
     routing {
+        openAPI(path = "openapi")
+        swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
+
         get("/") {
             call.respondText("Loja Social IPCA API is running")
         }

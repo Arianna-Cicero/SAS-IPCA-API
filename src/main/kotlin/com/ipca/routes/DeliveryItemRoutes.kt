@@ -12,8 +12,8 @@ import java.util.UUID
 @Serializable
 data class DeliveryItemRequest(
     val idDelivery: UUID,
-    val idGood: Integer,
-    val quantity: Integer
+    val idGood: Int,
+    val quantity: Int
 )
 
 fun Route.deliveryItemRoutes() {
