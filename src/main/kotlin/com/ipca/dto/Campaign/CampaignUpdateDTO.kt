@@ -1,0 +1,12 @@
+package com.ipca.dto.Campaign
+
+import kotlinx.serialization.Serializable
+import java.time.LocalDate
+
+@Serializable
+data class CampaignUpdateDTO(
+    val title: String? = null,
+    val description: String? = null,
+    val dateStart: LocalDate? = null,
+    val dateEnd: LocalDate? = null
+)

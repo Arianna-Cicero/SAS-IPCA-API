@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: Loja Social IPCA API
+  description: API para gestão da Loja Social do IPCA
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: API running
