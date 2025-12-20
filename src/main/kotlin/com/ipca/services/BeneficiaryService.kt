@@ -1,7 +1,7 @@
 package com.ipca.services
 
 import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO
-import com.ipca.dto.Beneficiary.BeneficiaryRequest
+import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO
 import com.ipca.models.BeneficiaryTable
 import com.ipca.models.SchedulingTable
 import com.ipca.models.DeliveryTable
@@ -38,7 +38,7 @@ object BeneficiaryService {
             }
     }
 
-    fun create(request: BeneficiaryRequest): Int = transaction {
+    fun create(request: BeneficiaryCreateDTO): Int = transaction {
         BeneficiaryTable.insertAndGetId { row ->
             row[name] = request.name
             row[studentNumber] = request.studentNumber
@@ -48,7 +48,18 @@ object BeneficiaryService {
         }.value
     }
 
+    fun update(id: Int, request: BeneficiaryUpdateDTO) = transaction {
+        BeneficiaryTable.update({ BeneficiaryTable.studentNumber eq id }) { row ->
+            request.name?.let { row[BeneficiaryTable.name] = it }
+            request.email?.let { row[BeneficiaryTable.email] = it }
+            request.telephone?.let { row[BeneficiaryTable.telephone] = it }
+            request.idCourse?.let { row[BeneficiaryTable.idCourse] = it }
+        }
+    }
 
+    fun delete(id: Int) = transaction {
+        BeneficiaryTable.deleteWhere { BeneficiaryTable.studentNumber eq id }
+    }
 
     fun getSchedulingForBeneficiary(beneficiaryId: Int): List<Map<String, Any?>> = transaction {
         SchedulingTable
@@ -63,9 +74,7 @@ object BeneficiaryService {
             }
     }
 
-
     fun getDeliveriesForBeneficiary(beneficiaryId: Int): List<Map<String, Any?>> = transaction {
-
         // first find all schedulings from this beneficiary
         val schedulings = SchedulingTable
             .select { SchedulingTable.idBeneficiary eq beneficiaryId }
@@ -75,7 +84,6 @@ object BeneficiaryService {
         DeliveryTable
             .select { DeliveryTable.idScheduling inList schedulings }
             .map { deliveryRow ->
-
                 val deliveryId = deliveryRow[DeliveryTable.id]
 
                 // get items for this delivery

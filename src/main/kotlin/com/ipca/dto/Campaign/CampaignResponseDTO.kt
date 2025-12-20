@@ -10,6 +10,5 @@ data class CampaignResponseDTO(
     val description: String,
     val dateStart: LocalDate,
     val dateEnd: LocalDate,
-    val totalCollected: Int,
-    val active: Boolean
+    val totalCollected: Int
 )

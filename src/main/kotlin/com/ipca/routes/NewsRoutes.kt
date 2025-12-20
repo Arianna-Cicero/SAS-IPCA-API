@@ -1,87 +1,87 @@
 package com.ipca.routes
 
-import com.ipca.dto.Good.GoodCreateDTO
-import com.ipca.dto.Good.GoodUpdateDTO
-import com.ipca.services.GoodService
+import com.ipca.dto.News.NewsCreateDTO
+import com.ipca.dto.News.NewsUpdateDTO
+import com.ipca.services.NewsService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
-fun Route.goodRoutes() {
-    route("/goods") {
-        // GET /goods → list all goods
+fun Route.newsRoutes() {
+    route("/news") {
+        // GET /news → list all news
         get {
             try {
-                val goods = GoodService.getAll()
-                call.respond(goods)
+                val newsList = NewsService.getAll()
+                call.respond(newsList)
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }
         }
 
-        // POST /goods → create good
+        // POST /news → create news
         post {
             try {
-                val request = call.receive<GoodCreateDTO>()
-                val id = GoodService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Good created", "id" to id))
+                val request = call.receive<NewsCreateDTO>()
+                val id = NewsService.create(request)
+                call.respond(HttpStatusCode.Created, mapOf("message" to "News created", "id" to id))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
         }
 
-        // GET /goods/{id} → get single good
+        // GET /news/{id} → get single news
         get("{id}") {
             try {
                 val id = call.parameters["id"]?.toIntOrNull()
                     ?: return@get call.respondText("Invalid ID", status = HttpStatusCode.BadRequest)
 
-                val good = GoodService.getById(id)
-                    ?: return@get call.respondText("Good not found", status = HttpStatusCode.NotFound)
+                val news = NewsService.getById(id)
+                    ?: return@get call.respondText("News not found", status = HttpStatusCode.NotFound)
 
-                call.respond(good)
+                call.respond(news)
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }
         }
 
-        // PUT /goods/{id} → update good
+        // PUT /news/{id} → update news
         put("{id}") {
             try {
                 val id = call.parameters["id"]?.toIntOrNull()
                     ?: return@put call.respondText("Invalid ID", status = HttpStatusCode.BadRequest)
 
-                val request = call.receive<GoodUpdateDTO>()
-                GoodService.update(id, request)
-                call.respond(mapOf("message" to "Good updated"))
+                val request = call.receive<NewsUpdateDTO>()
+                NewsService.update(id, request)
+                call.respond(mapOf("message" to "News updated"))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
         }
 
-        // DELETE /goods/{id} → delete good
+        // DELETE /news/{id} → delete news
         delete("{id}") {
             try {
                 val id = call.parameters["id"]?.toIntOrNull()
                     ?: return@delete call.respondText("Invalid ID", status = HttpStatusCode.BadRequest)
 
-                GoodService.delete(id)
-                call.respond(mapOf("message" to "Good deleted"))
+                NewsService.delete(id)
+                call.respond(mapOf("message" to "News deleted"))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }
         }
 
-        // GET /goods/category/{category} → list goods by category
-        get("category/{category}") {
+        // GET /news/campaign/{campaignId} → list news by campaign
+        get("campaign/{campaignId}") {
             try {
-                val category = call.parameters["category"]
-                    ?: return@get call.respondText("Invalid category", status = HttpStatusCode.BadRequest)
+                val campaignId = call.parameters["campaignId"]?.toIntOrNull()
+                    ?: return@get call.respondText("Invalid campaign ID", status = HttpStatusCode.BadRequest)
 
-                val goods = GoodService.getByCategory(category)
-                call.respond(goods)
+                val newsList = NewsService.getByCampaignId(campaignId)
+                call.respond(newsList)
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }

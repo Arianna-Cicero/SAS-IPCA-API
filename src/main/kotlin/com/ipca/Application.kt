@@ -12,11 +12,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import com.ipca.routes.courseRoutes
-import com.ipca.routes.beneficiaryRoutes
-import com.ipca.routes.collaboratorRoutes
-import com.ipca.routes.deliveryItemRoutes
-import com.ipca.routes.deliveryRoutes
+import com.ipca.routes.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.insert
@@ -70,6 +66,13 @@ fun Application.module() {
             collaboratorRoutes()
             deliveryRoutes()
             deliveryItemRoutes()
+            donationRoutes()
+            goodRoutes()
+            expirationAlertRoutes()
+            schedulingRoutes()
+            newsRoutes()
+            activityLogRoutes()
+            entityRoutes()
         }
     }
 }

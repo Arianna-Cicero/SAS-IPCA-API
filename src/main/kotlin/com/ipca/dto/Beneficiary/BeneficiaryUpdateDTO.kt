@@ -8,5 +8,5 @@ data class BeneficiaryUpdateDTO(
     val studentNumber: Int? = null,
     val email: String? = null,
     val telephone: String? = null,
-    val courseId: Int? = null
+    val idCourse: Int? = null
 )
