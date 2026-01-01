@@ -95,7 +95,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}
+          images: ghcr.io/arianna-cicero/sas-ipca-api
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
