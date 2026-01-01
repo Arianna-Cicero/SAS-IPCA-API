@@ -1,9 +1,19 @@
+kotlin {
+    jvmToolchain(17)
+}
+
 plugins {
     kotlin("jvm") version "1.9.22"
     application
     id("io.gitlab.arturbosch.detekt") version "1.23.5"
     id("org.owasp.dependencycheck") version "9.0.7"
     jacoco
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 val ktorVersion = "3.0.0"
@@ -76,19 +86,15 @@ tasks.jacocoTestReport {
 // Detekt configuration
 
 detekt {
+    toolVersion = "1.23.5"
     config.setFrom(files("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
+    baseline = file("detekt-baseline.xml")
     autoCorrect = false
     parallel = true
     ignoreFailures = false
-
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-        txt.required.set(false)
-        sarif.required.set(false)
-    }
 }
+
 
 // Distribution task
 distributions {
