@@ -6,6 +6,7 @@ import com.ipca.dto.Schedulling.SchedulingCreateDTO
 import com.ipca.dto.Schedulling.SchedulingUpdateDTO
 import com.ipca.exceptions.ValidationException
 import com.ipca.exceptions.EntityNotFoundException
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
@@ -20,7 +21,6 @@ object SchedulingValidator {
     
     fun validateUpdate(dto: SchedulingUpdateDTO) {
         if (dto.dateDelivery != null) validateDeliveryDate(dto.dateDelivery)
-        if (dto.beneficiaryId != null) validateBeneficiaryExists(dto.beneficiaryId)
         if (dto.collaboratorId != null) validateCollaboratorExists(dto.collaboratorId.toString())
     }
     

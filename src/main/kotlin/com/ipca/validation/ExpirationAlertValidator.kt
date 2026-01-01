@@ -2,7 +2,6 @@ package com.ipca.validation
 
 import com.ipca.models.GoodTable
 import com.ipca.dto.ExpirationAlert.ExpirationAlertCreateDTO
-import com.ipca.dto.ExpirationAlert.ExpirationAlertUpdateDTO
 import com.ipca.exceptions.ValidationException
 import com.ipca.exceptions.EntityNotFoundException
 import org.jetbrains.exposed.sql.select
@@ -15,10 +14,7 @@ object ExpirationAlertValidator {
         validateRemainingDays(dto.remainingDays)
     }
     
-    fun validateUpdate(dto: ExpirationAlertUpdateDTO) {
-        if (dto.goodId != null) validateGoodExists(dto.goodId)
-        if (dto.remainingDays != null) validateRemainingDays(dto.remainingDays)
-    }
+    // No update DTO exists; update validation handled per-route if needed
     
     private fun validateGoodExists(goodId: Int) {
         val exists = transaction {

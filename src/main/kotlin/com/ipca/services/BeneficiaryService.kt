@@ -7,6 +7,7 @@ import com.ipca.models.SchedulingTable
 import com.ipca.models.DeliveryTable
 import com.ipca.models.DeliveryItemTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object BeneficiaryService {

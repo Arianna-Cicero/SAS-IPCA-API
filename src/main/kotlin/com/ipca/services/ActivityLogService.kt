@@ -6,6 +6,7 @@ import com.ipca.models.ActivityLogTable
 import com.ipca.models.EntityTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.UUID
 
 object ActivityLogService {
@@ -52,12 +53,14 @@ object ActivityLogService {
     }
 
     fun create(request: ActivityLogCreateDTO): Int = transaction {
-        ActivityLogTable.insertAndGetId {
-            it[collaboratorId] = request.collaboratorId
-            it[entityId] = request.entityId
-            it[recordId] = request.recordId
-            it[action] = request.action
-        }.value
+        val insert = ActivityLogTable.insert { row ->
+            row[collaboratorId] = request.collaboratorId
+            row[entityId] = request.entityId
+            row[recordId] = request.recordId
+            row[action] = request.action
+        }
+        insert.resultedValues?.first()?.get(ActivityLogTable.id)
+            ?: error("Failed to insert ActivityLog")
     }
 
     fun getByCollaboratorId(collaboratorId: String): List<ActivityLogResponseDTO> = transaction {

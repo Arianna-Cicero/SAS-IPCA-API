@@ -7,6 +7,7 @@ import com.ipca.dto.Campaign.CampaignSummaryDTO
 import com.ipca.models.NewsTable
 import com.ipca.models.CampaignTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object NewsService {
@@ -69,12 +70,14 @@ object NewsService {
     }
 
     fun create(request: NewsCreateDTO): Int = transaction {
-        NewsTable.insertAndGetId {
-            it[title] = request.title
-            it[content] = request.content
-            it[datePublication] = request.datePublication
-            it[idCampaign] = request.campaignId
-        }.value
+        val insert = NewsTable.insert { row ->
+            row[title] = request.title
+            row[content] = request.content
+            row[datePublication] = request.datePublication
+            request.campaignId?.let { cid -> row[idCampaign] = cid }
+        }
+        insert.resultedValues?.first()?.get(NewsTable.id)
+            ?: error("Failed to insert News")
     }
 
     fun update(id: Int, request: NewsUpdateDTO) = transaction {

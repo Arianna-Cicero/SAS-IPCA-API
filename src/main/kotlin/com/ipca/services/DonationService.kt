@@ -5,6 +5,7 @@ import com.ipca.dto.Donation.DonationResponseDTO
 import com.ipca.dto.Donation.DonationUpdateDTO
 import com.ipca.models.DonationTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 

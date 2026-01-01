@@ -6,6 +6,7 @@ import com.ipca.models.ExpirationAlertTable
 import com.ipca.models.GoodTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 object ExpirationAlertService {
 
@@ -53,12 +54,14 @@ object ExpirationAlertService {
     }
 
     fun create(request: ExpirationAlertCreateDTO): Int = transaction {
-        ExpirationAlertTable.insertAndGetId {
-            it[idGood] = request.goodId
-            it[dateAlert] = request.dateAlert
-            it[remainingDays] = request.remainingDays
-            it[resolved] = false
-        }.value
+        val insert = ExpirationAlertTable.insert { row ->
+            row[idGood] = request.goodId
+            row[dateAlert] = request.dateAlert
+            row[remainingDays] = request.remainingDays
+            row[resolved] = false
+        }
+        insert.resultedValues?.first()?.get(ExpirationAlertTable.id)
+            ?: error("Failed to insert ExpirationAlert")
     }
 
     fun resolve(id: Int, resolved: Boolean) = transaction {

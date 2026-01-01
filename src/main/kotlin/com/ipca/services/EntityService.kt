@@ -4,6 +4,7 @@ import com.ipca.dto.Entity.EntityCreateDTO
 import com.ipca.dto.Entity.EntityResponseDTO
 import com.ipca.models.EntityTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object EntityService {
@@ -30,9 +31,11 @@ object EntityService {
     }
 
     fun create(request: EntityCreateDTO): Int = transaction {
-        EntityTable.insertAndGetId {
-            it[name] = request.name
-        }.value
+        val insert = EntityTable.insert { row ->
+            row[name] = request.name
+        }
+        insert.resultedValues?.first()?.get(EntityTable.id)
+            ?: error("Failed to insert Entity")
     }
 
     fun getByName(name: String): EntityResponseDTO? = transaction {

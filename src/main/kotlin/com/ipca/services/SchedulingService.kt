@@ -9,6 +9,7 @@ import com.ipca.models.SchedulingTable
 import com.ipca.models.BeneficiaryTable
 import com.ipca.models.CollaboratorTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object SchedulingService {
@@ -19,11 +20,11 @@ object SchedulingService {
             val collaboratorId = row[SchedulingTable.idCollaborator]
 
             val beneficiary = BeneficiaryTable
-                .select { BeneficiaryTable.id eq beneficiaryId }
+                .select { BeneficiaryTable.studentNumber eq beneficiaryId }
                 .singleOrNull()
                 ?.let { benRow ->
                     BeneficiarySummaryDTO(
-                        id = benRow[BeneficiaryTable.id],
+                        id = benRow[BeneficiaryTable.studentNumber],
                         name = benRow[BeneficiaryTable.name],
                         studentNumber = benRow[BeneficiaryTable.studentNumber]
                     )
@@ -59,11 +60,11 @@ object SchedulingService {
                 val collaboratorId = row[SchedulingTable.idCollaborator]
 
                 val beneficiary = BeneficiaryTable
-                    .select { BeneficiaryTable.id eq beneficiaryId }
+                    .select { BeneficiaryTable.studentNumber eq beneficiaryId }
                     .singleOrNull()
                     ?.let { benRow ->
                         BeneficiarySummaryDTO(
-                            id = benRow[BeneficiaryTable.id],
+                            id = benRow[BeneficiaryTable.studentNumber],
                             name = benRow[BeneficiaryTable.name],
                             studentNumber = benRow[BeneficiaryTable.studentNumber]
                         )
@@ -91,12 +92,14 @@ object SchedulingService {
     }
 
     fun create(request: SchedulingCreateDTO): Int = transaction {
-        SchedulingTable.insertAndGetId {
-            it[idBeneficiary] = request.beneficiaryId
-            it[idCollaborator] = request.collaboratorId
-            it[dateDelivery] = request.dateDelivery
-            it[status] = "pending"
-        }.value
+        val insert = SchedulingTable.insert { row ->
+            row[idBeneficiary] = request.beneficiaryId
+            row[idCollaborator] = request.collaboratorId
+            row[dateDelivery] = request.dateDelivery
+            row[status] = "pending"
+        }
+        insert.resultedValues?.first()?.get(SchedulingTable.id)
+            ?: error("Failed to insert Scheduling")
     }
 
     fun update(id: Int, request: SchedulingUpdateDTO) = transaction {

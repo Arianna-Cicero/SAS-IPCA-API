@@ -89,10 +89,4 @@ fun Route.beneficiaryRoutes() {
             call.respond(list)
         }
     }
-}                ?: return@get call.respondText("Invalid ID")
-
-            val list = BeneficiaryService.getDeliveriesForBeneficiary(id)
-            call.respond(list)
-        }
     }
-}

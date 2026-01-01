@@ -6,6 +6,7 @@ import com.ipca.models.DeliveryTable
 import com.ipca.models.DeliveryItemTable
 import com.ipca.models.GoodTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 

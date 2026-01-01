@@ -2,7 +2,6 @@ package com.ipca.validation
 
 import com.ipca.models.SchedulingTable
 import com.ipca.dto.Delivery.DeliveryCreateDTO
-import com.ipca.dto.Delivery.DeliveryStatusUpdateDTO
 import com.ipca.exceptions.ValidationException
 import com.ipca.exceptions.EntityNotFoundException
 import com.ipca.exceptions.InvalidStatusTransitionException
@@ -40,8 +39,8 @@ object DeliveryValidator {
         val allowedTransitions = STATUS_TRANSITIONS[fromStatus] ?: setOf()
         if (toStatus !in allowedTransitions) {
             throw InvalidStatusTransitionException(
-                "delivery",
-                "status",
+                entityType = "delivery",
+                field = "status",
                 currentStatus = fromStatus,
                 targetStatus = toStatus
             )

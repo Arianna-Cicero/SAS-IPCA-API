@@ -6,12 +6,1880 @@ info:
 
 servers:
   - url: http://localhost:8080
-    description: Local server
+    description: Local development
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    BasicMessage:
+      type: object
+      properties:
+        message:
+          type: string
+
+    CreatedIntResourceResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        id:
+          type: integer
+
+    CreatedStringResourceResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        id:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: BAD_REQUEST
+        message:
+          type: string
+        details:
+          type: string
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    SessionResponse:
+      type: object
+      properties:
+        sessionToken:
+          type: string
+          format: uuid
+        collaboratorId:
+          type: string
+          format: uuid
+        expiresAt:
+          type: string
+          format: date-time
+
+    SessionValidateResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+
+    CourseCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    CourseUpdate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CourseRef:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    BeneficiaryCreate:
+      type: object
+      required: [name, studentNumber, email, telephone, idCourse]
+      properties:
+        name:
+          type: string
+        studentNumber:
+          type: integer
+        email:
+          type: string
+          format: email
+        telephone:
+          type: string
+        idCourse:
+          type: integer
+
+    BeneficiaryUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        studentNumber:
+          type: integer
+        email:
+          type: string
+          format: email
+        telephone:
+          type: string
+        idCourse:
+          type: integer
+
+    BeneficiarySummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        studentNumber:
+          type: integer
+
+    Beneficiary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        studentNumber:
+          type: integer
+        email:
+          type: string
+          format: email
+        telephone:
+          type: string
+        course:
+          $ref: '#/components/schemas/CourseRef'
+
+    CollaboratorCreate:
+      type: object
+      required: [name, email, password, profile]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        profile:
+          type: string
+
+    CollaboratorUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        profile:
+          type: string
+        active:
+          type: boolean
+
+    CollaboratorSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Collaborator:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        profile:
+          type: string
+        active:
+          type: boolean
+
+    DeliveryCreate:
+      type: object
+      required: [schedulingId, dateDelivery]
+      properties:
+        schedulingId:
+          type: integer
+        dateDelivery:
+          type: string
+          format: date
+
+    DeliveryUpdateStatus:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+
+    DeliveryItemCreate:
+      type: object
+      required: [goodId, quantity]
+      properties:
+        goodId:
+          type: integer
+        quantity:
+          type: integer
+
+    DeliveryItem:
+      type: object
+      properties:
+        goodId:
+          type: integer
+        goodName:
+          type: string
+        category:
+          type: string
+        quantity:
+          type: integer
+
+    Delivery:
+      type: object
+      properties:
+        id:
+          type: string
+        schedulingId:
+          type: integer
+        dateDelivery:
+          type: string
+          format: date
+        status:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryItem'
+
+    DonationCreate:
+      type: object
+      required: [nameDonor, type, dateDonor]
+      properties:
+        nameDonor:
+          type: string
+        type:
+          type: string
+        dateDonor:
+          type: string
+          format: date
+        description:
+          type: string
+
+    DonationUpdate:
+      type: object
+      properties:
+        nameDonor:
+          type: string
+        type:
+          type: string
+        dateDonor:
+          type: string
+          format: date
+        description:
+          type: string
+
+    Donation:
+      type: object
+      properties:
+        id:
+          type: string
+        nameDonor:
+          type: string
+        type:
+          type: string
+        dateDonor:
+          type: string
+          format: date
+        description:
+          type: string
+
+    GoodCreate:
+      type: object
+      required: [name, category, quantity, intake, dateValidity, donationId]
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        quantity:
+          type: integer
+        intake:
+          type: string
+          format: date
+        dateValidity:
+          type: string
+          format: date
+        donationId:
+          type: string
+
+    GoodUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        quantity:
+          type: integer
+        dateValidity:
+          type: string
+          format: date
+        status:
+          type: string
+
+    Good:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        quantity:
+          type: integer
+        intake:
+          type: string
+          format: date
+        dateValidity:
+          type: string
+          format: date
+        status:
+          type: string
+        donation:
+          $ref: '#/components/schemas/Donation'
+
+    ExpirationAlertCreate:
+      type: object
+      required: [goodId, dateAlert, remainingDays]
+      properties:
+        goodId:
+          type: integer
+        dateAlert:
+          type: string
+          format: date
+        remainingDays:
+          type: integer
+
+    ExpirationAlertResolve:
+      type: object
+      properties:
+        resolved:
+          type: boolean
+          default: true
+
+    ExpirationAlert:
+      type: object
+      properties:
+        id:
+          type: integer
+        goodId:
+          type: integer
+        goodName:
+          type: string
+        category:
+          type: string
+        dateValidity:
+          type: string
+          format: date
+        dateAlert:
+          type: string
+          format: date
+        remainingDays:
+          type: integer
+        resolved:
+          type: boolean
+
+    SchedulingCreate:
+      type: object
+      required: [beneficiaryId, collaboratorId, dateDelivery]
+      properties:
+        beneficiaryId:
+          type: integer
+        collaboratorId:
+          type: string
+          format: uuid
+        dateDelivery:
+          type: string
+          format: date
+
+    SchedulingUpdate:
+      type: object
+      properties:
+        dateDelivery:
+          type: string
+          format: date
+        collaboratorId:
+          type: string
+          format: uuid
+        status:
+          type: string
+
+    Scheduling:
+      type: object
+      properties:
+        id:
+          type: integer
+        dateDelivery:
+          type: string
+          format: date
+        status:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/BeneficiarySummary'
+        collaborator:
+          $ref: '#/components/schemas/CollaboratorSummary'
+
+    CampaignSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+
+    NewsCreate:
+      type: object
+      required: [title, content, datePublication]
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        datePublication:
+          type: string
+          format: date
+        campaignId:
+          type: integer
+
+    NewsUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        datePublication:
+          type: string
+          format: date
+        campaignId:
+          type: integer
+
+    News:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        datePublication:
+          type: string
+          format: date
+        campaign:
+          $ref: '#/components/schemas/CampaignSummary'
+
+    ActivityLogCreate:
+      type: object
+      required: [collaboratorId, entityId, action]
+      properties:
+        collaboratorId:
+          type: string
+          format: uuid
+        entityId:
+          type: integer
+        recordId:
+          type: string
+          nullable: true
+        action:
+          type: string
+
+    ActivityLog:
+      type: object
+      properties:
+        id:
+          type: integer
+        collaboratorId:
+          type: string
+          format: uuid
+        entityId:
+          type: integer
+        entityName:
+          type: string
+        recordId:
+          type: string
+          nullable: true
+        action:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    EntityCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
 
 paths:
   /:
     get:
+      tags: [Health]
       summary: Health check
       responses:
         '200':
           description: API running
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate and create session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Invalidate current session
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Session invalidated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+        '400':
+          description: Missing or invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /auth/validate:
+    post:
+      tags: [Auth]
+      summary: Validate session token
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Token validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionValidateResponse'
+        '400':
+          description: Missing or invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /courses:
+    get:
+      tags: [Courses]
+      summary: List courses
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        '500':
+          description: Server error
+    post:
+      tags: [Courses]
+      summary: Create course
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+        '400':
+          description: Validation error
+
+  /courses/{id}:
+    get:
+      tags: [Courses]
+      summary: Get course
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Course
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '404':
+          description: Not found
+    put:
+      tags: [Courses]
+      summary: Update course
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+        '400':
+          description: Validation error
+    delete:
+      tags: [Courses]
+      summary: Delete course
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /beneficiaries:
+    get:
+      tags: [Beneficiaries]
+      summary: List beneficiaries
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Beneficiaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beneficiary'
+    post:
+      tags: [Beneficiaries]
+      summary: Create beneficiary
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeneficiaryCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /beneficiaries/{id}:
+    get:
+      tags: [Beneficiaries]
+      summary: Get beneficiary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Beneficiary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Beneficiary'
+        '404':
+          description: Not found
+    put:
+      tags: [Beneficiaries]
+      summary: Update beneficiary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeneficiaryUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [Beneficiaries]
+      summary: Delete beneficiary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /beneficiaries/{id}/scheduling:
+    get:
+      tags: [Beneficiaries, Scheduling]
+      summary: List schedulings for beneficiary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Schedulings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scheduling'
+
+  /beneficiaries/{id}/deliveries:
+    get:
+      tags: [Beneficiaries, Deliveries]
+      summary: List deliveries for beneficiary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deliveries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Delivery'
+
+  /collaborators:
+    get:
+      tags: [Collaborators]
+      summary: List collaborators
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Collaborators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collaborator'
+    post:
+      tags: [Collaborators]
+      summary: Create collaborator
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollaboratorCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /collaborators/{id}:
+    get:
+      tags: [Collaborators]
+      summary: Get collaborator
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Collaborator
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collaborator'
+    put:
+      tags: [Collaborators]
+      summary: Update collaborator
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollaboratorUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [Collaborators]
+      summary: Delete collaborator
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /deliveries:
+    get:
+      tags: [Deliveries]
+      summary: List deliveries
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Deliveries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Delivery'
+    post:
+      tags: [Deliveries]
+      summary: Create delivery
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedStringResourceResponse'
+
+  /deliveries/{id}:
+    get:
+      tags: [Deliveries]
+      summary: Get delivery
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delivery
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+        '404':
+          description: Not found
+    delete:
+      tags: [Deliveries]
+      summary: Delete delivery
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /deliveries/{id}/status:
+    put:
+      tags: [Deliveries]
+      summary: Update delivery status
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryUpdateStatus'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /delivery-items:
+    get:
+      tags: [DeliveryItems]
+      summary: List delivery items
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryItem'
+    post:
+      tags: [DeliveryItems]
+      summary: Create delivery item
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryItemCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /delivery-items/by-delivery/{deliveryId}:
+    get:
+      tags: [DeliveryItems]
+      summary: List items for a delivery
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: deliveryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryItem'
+
+  /delivery-items/{deliveryId}/{goodId}:
+    delete:
+      tags: [DeliveryItems]
+      summary: Delete delivery item
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: deliveryId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: goodId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /donations:
+    get:
+      tags: [Donations]
+      summary: List donations
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Donations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Donation'
+    post:
+      tags: [Donations]
+      summary: Create donation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DonationCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedStringResourceResponse'
+
+  /donations/{id}:
+    get:
+      tags: [Donations]
+      summary: Get donation
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Donation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '404':
+          description: Not found
+    put:
+      tags: [Donations]
+      summary: Update donation
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DonationUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [Donations]
+      summary: Delete donation
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /goods:
+    get:
+      tags: [Goods]
+      summary: List goods
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Goods
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Good'
+    post:
+      tags: [Goods]
+      summary: Create good
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /goods/{id}:
+    get:
+      tags: [Goods]
+      summary: Get good
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Good
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+    put:
+      tags: [Goods]
+      summary: Update good
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [Goods]
+      summary: Delete good
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /goods/category/{category}:
+    get:
+      tags: [Goods]
+      summary: List goods by category
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: category
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Goods
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Good'
+
+  /expiration-alerts:
+    get:
+      tags: [ExpirationAlerts]
+      summary: List expiration alerts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExpirationAlert'
+    post:
+      tags: [ExpirationAlerts]
+      summary: Create expiration alert
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpirationAlertCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /expiration-alerts/{id}:
+    get:
+      tags: [ExpirationAlerts]
+      summary: Get expiration alert
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Alert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpirationAlert'
+    delete:
+      tags: [ExpirationAlerts]
+      summary: Delete expiration alert
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /expiration-alerts/{id}/resolve:
+    put:
+      tags: [ExpirationAlerts]
+      summary: Resolve expiration alert
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpirationAlertResolve'
+      responses:
+        '200':
+          description: Resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /expiration-alerts/active/all:
+    get:
+      tags: [ExpirationAlerts]
+      summary: List unresolved alerts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExpirationAlert'
+
+  /scheduling:
+    get:
+      tags: [Scheduling]
+      summary: List schedulings
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Schedulings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scheduling'
+    post:
+      tags: [Scheduling]
+      summary: Create scheduling
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchedulingCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /scheduling/{id}:
+    get:
+      tags: [Scheduling]
+      summary: Get scheduling
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Scheduling
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scheduling'
+    put:
+      tags: [Scheduling]
+      summary: Update scheduling
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchedulingUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [Scheduling]
+      summary: Delete scheduling
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /news:
+    get:
+      tags: [News]
+      summary: List news
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: News items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/News'
+    post:
+      tags: [News]
+      summary: Create news
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /news/{id}:
+    get:
+      tags: [News]
+      summary: Get news item
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: News item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/News'
+    put:
+      tags: [News]
+      summary: Update news item
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsUpdate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+    delete:
+      tags: [News]
+      summary: Delete news item
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicMessage'
+
+  /news/campaign/{campaignId}:
+    get:
+      tags: [News]
+      summary: List news by campaign
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: News items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/News'
+
+  /activity-logs:
+    get:
+      tags: [ActivityLogs]
+      summary: List activity logs
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityLog'
+    post:
+      tags: [ActivityLogs]
+      summary: Create activity log
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityLogCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /activity-logs/{id}:
+    get:
+      tags: [ActivityLogs]
+      summary: Get activity log
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Activity log
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityLog'
+
+  /activity-logs/collaborator/{collaboratorId}:
+    get:
+      tags: [ActivityLogs]
+      summary: List logs for collaborator
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: collaboratorId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityLog'
+
+  /activity-logs/entity/{entityId}:
+    get:
+      tags: [ActivityLogs]
+      summary: List logs for entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: entityId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityLog'
+
+  /entities:
+    get:
+      tags: [Entities]
+      summary: List entities
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Entities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entity'
+    post:
+      tags: [Entities]
+      summary: Create entity
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedIntResourceResponse'
+
+  /entities/{id}:
+    get:
+      tags: [Entities]
+      summary: Get entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+
+  /entities/by-name/{name}:
+    get:
+      tags: [Entities]
+      summary: Get entity by name
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'

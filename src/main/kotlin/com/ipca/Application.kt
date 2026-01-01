@@ -14,11 +14,13 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import com.ipca.routes.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.insert
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.openapi.*
 import io.ktor.server.plugins.swagger.*
+import io.ktor.http.*
 
 
 
@@ -51,7 +53,12 @@ fun Application.module() {
 
 
     routing {
-        openAPI(path = "openapi")
+        // Serve the static OpenAPI YAML from resources without http-content plugin
+        get("/openapi/documentation.yaml") {
+            val resource = this::class.java.classLoader.getResource("openapi/documentation.yaml")
+            val yaml = resource?.readText() ?: return@get call.respondText("Spec not found", status = HttpStatusCode.NotFound)
+            call.respondText(yaml, ContentType.parse("application/yaml"))
+        }
         swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
 
         get("/") {

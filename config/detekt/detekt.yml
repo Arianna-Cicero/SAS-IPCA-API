@@ -574,6 +574,5 @@ style:
 
 verify:
   active: true
-  active: true
   DeprecatedBlockTag:
     active: false

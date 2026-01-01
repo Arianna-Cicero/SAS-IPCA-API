@@ -1,7 +1,6 @@
 package com.ipca.validation
 
 import com.ipca.dto.Entity.EntityCreateDTO
-import com.ipca.dto.Entity.EntityUpdateDTO
 import com.ipca.exceptions.ValidationException
 import java.time.LocalDate
 
@@ -11,9 +10,7 @@ object EntityValidator {
         validateName(dto.name)
     }
     
-    fun validateUpdate(dto: EntityUpdateDTO) {
-        if (dto.name != null) validateName(dto.name)
-    }
+    // No update DTO exists; update validation handled per-route when needed
     
     private fun validateName(name: String) {
         if (name.isBlank()) {

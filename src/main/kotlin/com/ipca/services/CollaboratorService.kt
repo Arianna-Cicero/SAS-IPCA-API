@@ -6,6 +6,7 @@ import com.ipca.dto.Collaborator.CollaboratorResponseDTO
 import com.ipca.dto.Collaborator.CollaboratorUpdateDTO
 import com.ipca.models.CollaboratorTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 

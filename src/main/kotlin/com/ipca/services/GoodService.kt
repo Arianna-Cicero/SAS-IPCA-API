@@ -7,6 +7,7 @@ import com.ipca.dto.Donation.DonationResponseDTO
 import com.ipca.models.GoodTable
 import com.ipca.models.DonationTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object GoodService {
@@ -35,7 +36,7 @@ object GoodService {
                 intake = row[GoodTable.intake],
                 dateValidity = row[GoodTable.dateValidity],
                 status = row[GoodTable.status],
-                donation = donation ?: DonationResponseDTO("", "", "", null, null)
+                donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
             )
         }
     }
@@ -67,25 +68,27 @@ object GoodService {
                     intake = row[GoodTable.intake],
                     dateValidity = row[GoodTable.dateValidity],
                     status = row[GoodTable.status],
-                    donation = donation ?: DonationResponseDTO("", "", "", null, null)
+                    donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
                 )
             }
     }
 
     fun create(request: GoodCreateDTO): Int = transaction {
-        GoodTable.insertAndGetId {
-            it[name] = request.name
-            it[category] = request.category
-            it[quantity] = request.quantity
-            it[intake] = request.intake
-            it[dateValidity] = request.dateValidity
-            it[status] = "available"
-            it[idDonation] = try {
+        val insert = GoodTable.insert { row ->
+            row[name] = request.name
+            row[category] = request.category
+            row[quantity] = request.quantity
+            row[intake] = request.intake
+            row[dateValidity] = request.dateValidity
+            row[status] = "available"
+            row[idDonation] = try {
                 java.util.UUID.fromString(request.donationId)
             } catch (e: Exception) {
                 java.util.UUID.randomUUID()
             }
-        }.value
+        }
+        insert.resultedValues?.first()?.get(GoodTable.id)
+            ?: error("Failed to insert Good")
     }
 
     fun update(id: Int, request: GoodUpdateDTO) = transaction {
@@ -128,7 +131,7 @@ object GoodService {
                     intake = row[GoodTable.intake],
                     dateValidity = row[GoodTable.dateValidity],
                     status = row[GoodTable.status],
-                    donation = donation ?: DonationResponseDTO("", "", "", null, null)
+                    donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
                 )
             }
     }
