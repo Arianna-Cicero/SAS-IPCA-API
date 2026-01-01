@@ -61,4 +61,26 @@ object AuthService {
             session[SessionTable.id_collaborator]
         }
     }
+
+    fun validateSession(tokenStr: String): Boolean {
+        return try {
+            val token = UUID.fromString(tokenStr)
+            validateToken(token) != null
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    fun logout(tokenStr: String) {
+        try {
+            val token = UUID.fromString(tokenStr)
+            transaction {
+                SessionTable.update({ SessionTable.id eq token }) { row ->
+                    row[active] = false
+                }
+            }
+        } catch (e: Exception) {
+            // Token format error, ignore
+        }
+    }
 }
