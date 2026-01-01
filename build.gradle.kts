@@ -19,7 +19,6 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-auth:3.0.0")
-    implementation("io.ktor:ktor-server-auth:3.0.0")
     implementation("io.ktor:ktor-server-auth-jvm:3.0.0")
 
     // Serialization
@@ -78,6 +77,7 @@ tasks.jacocoTestReport {
 
 detekt {
     config.setFrom(files("config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
     autoCorrect = false
     parallel = true
     ignoreFailures = false
