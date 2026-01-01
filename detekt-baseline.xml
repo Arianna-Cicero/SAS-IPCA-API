@@ -1,0 +1,539 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ArgumentListWrapping:BeneficiaryTable.kt$BeneficiaryTable$("id_course")</ID>
+    <ID>ArgumentListWrapping:BeneficiaryTable.kt$BeneficiaryTable$(CourseTable.id, onDelete = org.jetbrains.exposed.sql.ReferenceOption.SET_NULL)</ID>
+    <ID>ArgumentListWrapping:BeneficiaryValidator.kt$BeneficiaryValidator$(dto.studentNumber, isUpdate = true, existingNumber = existingStudentNumber)</ID>
+    <ID>ArgumentListWrapping:DatabaseFactory.kt$DatabaseFactory$(url, System.getenv("JDBC_DATABASE_USER") ?: "postgres", System.getenv("JDBC_DATABASE_PASSWORD") ?: "")</ID>
+    <ID>ArgumentListWrapping:DatabaseFactory.kt$DatabaseFactory$(url, dotenv["DB_USER"] ?: System.getenv("DB_USER") ?: "postgres", dotenv["DB_PASS"] ?: System.getenv("DB_PASS") ?: "")</ID>
+    <ID>ArgumentListWrapping:SchedulingTable.kt$SchedulingTable$("id_beneficiary")</ID>
+    <ID>ArgumentListWrapping:SchedulingTable.kt$SchedulingTable$("id_collaborator")</ID>
+    <ID>ArgumentListWrapping:SchedulingTable.kt$SchedulingTable$(BeneficiaryTable.studentNumber, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.CASCADE)</ID>
+    <ID>ArgumentListWrapping:SchedulingTable.kt$SchedulingTable$(CollaboratorTable.id_collaborator, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.SET_NULL)</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//class GoodStatusTest {</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//import java.time.LocalDate</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//import kotlin.test.Test</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//import kotlin.test.assertEquals</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//package com.ipca.unit</ID>
+    <ID>CommentSpacing:GoodStatusTest.kt$//}</ID>
+    <ID>CyclomaticComplexMethod:DatabaseFactory.kt$DatabaseFactory$fun init()</ID>
+    <ID>Filename:BeneficiaryDTO.kt$com.ipca.dto.Beneficiary.BeneficiaryDTO.kt</ID>
+    <ID>Filename:TestApplication.kt$com.ipca.TestApplication.kt</ID>
+    <ID>Filename:configureAuth.kt$com.ipca.auth.configureAuth.kt</ID>
+    <ID>FinalNewline:ActivityLogCreateDTO.kt$com.ipca.dto.ActivityLog.ActivityLogCreateDTO.kt</ID>
+    <ID>FinalNewline:ActivityLogResponseDTO.kt$com.ipca.dto.ActivityLog.ActivityLogResponseDTO.kt</ID>
+    <ID>FinalNewline:BeneficiaryCreateDTO.kt$com.ipca.dto.Beneficiary.BeneficiaryCreateDTO.kt</ID>
+    <ID>FinalNewline:BeneficiaryRoutesTest.kt$com.ipca.integration.routes.BeneficiaryRoutesTest.kt</ID>
+    <ID>FinalNewline:CollaboratorPrincipal.kt$com.ipca.auth.CollaboratorPrincipal.kt</ID>
+    <ID>FinalNewline:CollaboratorRoutes.kt$com.ipca.routes.CollaboratorRoutes.kt</ID>
+    <ID>FinalNewline:CollaboratorService.kt$com.ipca.services.CollaboratorService.kt</ID>
+    <ID>FinalNewline:CollaboratorTable.kt$com.ipca.models.CollaboratorTable.kt</ID>
+    <ID>FinalNewline:DeliveryItemRoutes.kt$com.ipca.routes.DeliveryItemRoutes.kt</ID>
+    <ID>FinalNewline:DeliveryItemService.kt$com.ipca.services.DeliveryItemService.kt</ID>
+    <ID>FinalNewline:DeliveryRoutes.kt$com.ipca.routes.DeliveryRoutes.kt</ID>
+    <ID>FinalNewline:DeliveryTable.kt$com.ipca.models.DeliveryTable.kt</ID>
+    <ID>FinalNewline:DonationTable.kt$com.ipca.models.DonationTable.kt</ID>
+    <ID>FinalNewline:GoodStatusTest.kt$.GoodStatusTest.kt</ID>
+    <ID>FinalNewline:SchedulingTable.kt$com.ipca.models.SchedulingTable.kt</ID>
+    <ID>FinalNewline:SessionTable.kt$com.ipca.models.SessionTable.kt</ID>
+    <ID>ImportOrdering:ActivityLogRoutes.kt$import com.ipca.dto.ActivityLog.ActivityLogCreateDTO import com.ipca.services.ActivityLogService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:ActivityLogService.kt$import com.ipca.dto.ActivityLog.ActivityLogCreateDTO import com.ipca.dto.ActivityLog.ActivityLogResponseDTO import com.ipca.models.ActivityLogTable import com.ipca.models.EntityTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.transactions.transaction import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import java.util.UUID</ID>
+    <ID>ImportOrdering:ActivityLogTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption import org.jetbrains.exposed.sql.javatime.CurrentDateTime import org.jetbrains.exposed.sql.javatime.datetime</ID>
+    <ID>ImportOrdering:ActivityLogValidator.kt$import com.ipca.models.CollaboratorTable import com.ipca.dto.ActivityLog.ActivityLogCreateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction import java.util.UUID</ID>
+    <ID>ImportOrdering:Application.kt$import com.ipca.auth.configureAuth import com.ipca.database.DatabaseFactory import com.ipca.logging.EntityType import com.ipca.models.EntityTable import com.ipca.routes.authRoutes import io.ktor.server.application.* import io.ktor.server.engine.* import io.ktor.server.netty.* import io.ktor.server.plugins.contentnegotiation.* import io.ktor.serialization.kotlinx.json.* import io.ktor.server.response.* import io.ktor.server.routing.* import com.ipca.routes.* import org.jetbrains.exposed.sql.transactions.transaction import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.insert import io.ktor.server.auth.* import io.ktor.server.plugins.openapi.* import io.ktor.server.plugins.swagger.* import io.ktor.http.*</ID>
+    <ID>ImportOrdering:BeneficiaryRoutes.kt$import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO import com.ipca.services.BeneficiaryService import io.ktor.server.application.* import io.ktor.server.routing.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.http.*</ID>
+    <ID>ImportOrdering:BeneficiaryService.kt$import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO import com.ipca.models.BeneficiaryTable import com.ipca.models.SchedulingTable import com.ipca.models.DeliveryTable import com.ipca.models.DeliveryItemTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:BeneficiaryTable.kt$import org.jetbrains.exposed.dao.id.IntIdTable import java.util.UUID import org.jetbrains.exposed.sql.Table</ID>
+    <ID>ImportOrdering:BeneficiaryValidator.kt$import com.ipca.models.CourseTable import com.ipca.models.BeneficiaryTable import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import com.ipca.exceptions.EntityAlreadyExistsException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:CollaboratorRoutes.kt$import com.ipca.dto.Collaborator.CollaboratorCreateDTO import com.ipca.dto.Collaborator.CollaboratorUpdateDTO import com.ipca.services.CollaboratorService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:CollaboratorValidator.kt$import com.ipca.models.CollaboratorTable import com.ipca.dto.Collaborator.CollaboratorCreateDTO import com.ipca.dto.Collaborator.CollaboratorUpdateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityAlreadyExistsException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:CourseRoutes.kt$import com.ipca.dto.Course.CourseCreateDTO import com.ipca.dto.Course.CourseUpdateDTO import com.ipca.services.CourseService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:DatabaseFactory.kt$import org.jetbrains.exposed.sql.Database import org.jetbrains.exposed.sql.SchemaUtils import org.jetbrains.exposed.sql.transactions.transaction import io.github.cdimascio.dotenv.dotenv import com.ipca.models.*</ID>
+    <ID>ImportOrdering:DeliveryItemRoutes.kt$import com.ipca.dto.DeliveryItem.DeliveryItemCreateDTO import com.ipca.services.DeliveryItemService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:DeliveryItemTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption</ID>
+    <ID>ImportOrdering:DeliveryItemValidator.kt$import com.ipca.models.GoodTable import com.ipca.dto.DeliveryItem.DeliveryItemCreateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:DeliveryRoutes.kt$import com.ipca.dto.Delivery.DeliveryCreateDTO import com.ipca.dto.Delivery.DeliveryUpdateStatusDTO import com.ipca.services.DeliveryService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:DeliveryService.kt$import com.ipca.dto.Delivery.DeliveryCreateDTO import com.ipca.dto.Delivery.DeliveryResponseDTO import com.ipca.models.DeliveryTable import com.ipca.models.DeliveryItemTable import com.ipca.models.GoodTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.transactions.transaction import java.util.UUID</ID>
+    <ID>ImportOrdering:DeliveryTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption import org.jetbrains.exposed.sql.javatime.date import java.util.UUID</ID>
+    <ID>ImportOrdering:DeliveryValidator.kt$import com.ipca.models.SchedulingTable import com.ipca.dto.Delivery.DeliveryCreateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import com.ipca.exceptions.InvalidStatusTransitionException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:DonationRoutes.kt$import com.ipca.dto.Donation.DonationCreateDTO import com.ipca.dto.Donation.DonationUpdateDTO import com.ipca.services.DonationService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:DonationValidator.kt$import com.ipca.models.GoodTable import com.ipca.dto.Donation.DonationCreateDTO import com.ipca.dto.Donation.DonationUpdateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:EntityRoutes.kt$import com.ipca.dto.Entity.EntityCreateDTO import com.ipca.services.EntityService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:ExpirationAlertRoutes.kt$import com.ipca.dto.ExpirationAlert.ExpirationAlertCreateDTO import com.ipca.dto.ExpirationAlert.ExpirationAlertResolveDTO import com.ipca.services.ExpirationAlertService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:ExpirationAlertService.kt$import com.ipca.dto.ExpirationAlert.ExpirationAlertCreateDTO import com.ipca.dto.ExpirationAlert.ExpirationAlertResponseDTO import com.ipca.models.ExpirationAlertTable import com.ipca.models.GoodTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.transactions.transaction import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq</ID>
+    <ID>ImportOrdering:ExpirationAlertTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption import org.jetbrains.exposed.sql.javatime.date</ID>
+    <ID>ImportOrdering:ExpirationAlertValidator.kt$import com.ipca.models.GoodTable import com.ipca.dto.ExpirationAlert.ExpirationAlertCreateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:GoodRoutes.kt$import com.ipca.dto.Good.GoodCreateDTO import com.ipca.dto.Good.GoodUpdateDTO import com.ipca.services.GoodService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:GoodService.kt$import com.ipca.dto.Good.GoodCreateDTO import com.ipca.dto.Good.GoodResponseDTO import com.ipca.dto.Good.GoodUpdateDTO import com.ipca.dto.Donation.DonationResponseDTO import com.ipca.models.GoodTable import com.ipca.models.DonationTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:GoodTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption import org.jetbrains.exposed.sql.javatime.date</ID>
+    <ID>ImportOrdering:NewsRoutes.kt$import com.ipca.dto.News.NewsCreateDTO import com.ipca.dto.News.NewsUpdateDTO import com.ipca.services.NewsService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:NewsService.kt$import com.ipca.dto.News.NewsCreateDTO import com.ipca.dto.News.NewsResponseDTO import com.ipca.dto.News.NewsUpdateDTO import com.ipca.dto.Campaign.CampaignSummaryDTO import com.ipca.models.NewsTable import com.ipca.models.CampaignTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:NewsTable.kt$import org.jetbrains.exposed.sql.Table import org.jetbrains.exposed.sql.ReferenceOption import org.jetbrains.exposed.sql.javatime.date</ID>
+    <ID>ImportOrdering:NewsValidator.kt$import com.ipca.models.CampaignTable import com.ipca.dto.News.NewsCreateDTO import com.ipca.dto.News.NewsUpdateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction import java.time.LocalDate</ID>
+    <ID>ImportOrdering:SchedulingRoutes.kt$import com.ipca.dto.Schedulling.SchedulingCreateDTO import com.ipca.dto.Schedulling.SchedulingUpdateDTO import com.ipca.services.SchedulingService import io.ktor.http.* import io.ktor.server.application.* import io.ktor.server.response.* import io.ktor.server.request.* import io.ktor.server.routing.*</ID>
+    <ID>ImportOrdering:SchedulingService.kt$import com.ipca.dto.Schedulling.SchedulingCreateDTO import com.ipca.dto.Schedulling.SchedulingResponseDTO import com.ipca.dto.Schedulling.SchedulingUpdateDTO import com.ipca.dto.Beneficiary.BeneficiarySummaryDTO import com.ipca.dto.Collaborator.CollaboratorSummaryDTO import com.ipca.models.SchedulingTable import com.ipca.models.BeneficiaryTable import com.ipca.models.CollaboratorTable import org.jetbrains.exposed.sql.* import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.transactions.transaction</ID>
+    <ID>ImportOrdering:SchedulingValidator.kt$import com.ipca.models.BeneficiaryTable import com.ipca.models.CollaboratorTable import com.ipca.dto.Schedulling.SchedulingCreateDTO import com.ipca.dto.Schedulling.SchedulingUpdateDTO import com.ipca.exceptions.ValidationException import com.ipca.exceptions.EntityNotFoundException import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq import org.jetbrains.exposed.sql.select import org.jetbrains.exposed.sql.transactions.transaction import java.time.LocalDate</ID>
+    <ID>ImportOrdering:ValidationTests.kt$import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO import com.ipca.dto.Collaborator.CollaboratorCreateDTO import com.ipca.dto.Good.GoodCreateDTO import com.ipca.dto.Good.GoodUpdateDTO import com.ipca.dto.Donation.DonationCreateDTO import com.ipca.dto.Campaign.CampaignCreateDTO import com.ipca.dto.News.NewsCreateDTO import com.ipca.dto.Entity.EntityCreateDTO import com.ipca.dto.Course.CourseCreateDTO import com.ipca.exceptions.* import com.ipca.validation.* import java.time.LocalDate import kotlin.test.*</ID>
+    <ID>Indentation:BeneficiaryRoutes.kt$ </ID>
+    <ID>Indentation:DeliveryItemTable.kt$DeliveryItemTable$ </ID>
+    <ID>Indentation:DeliveryTable.kt$DeliveryTable$ </ID>
+    <ID>Indentation:ExpirationAlertTable.kt$ExpirationAlertTable$ </ID>
+    <ID>Indentation:GoodTable.kt$GoodTable$ </ID>
+    <ID>Indentation:NewsTable.kt$NewsTable$ </ID>
+    <ID>Indentation:PasswordUtils.kt$PasswordUtils$ </ID>
+    <ID>LongMethod:BeneficiaryRoutes.kt$fun Route.beneficiaryRoutes()</ID>
+    <ID>LongMethod:ExpirationAlertRoutes.kt$fun Route.expirationAlertRoutes()</ID>
+    <ID>LongMethod:GoodRoutes.kt$fun Route.goodRoutes()</ID>
+    <ID>LongMethod:NewsRoutes.kt$fun Route.newsRoutes()</ID>
+    <ID>MatchingDeclarationName:AuthRoutes.kt$LoginRequest</ID>
+    <ID>MatchingDeclarationName:BeneficiaryDTO.kt$CourseDTO</ID>
+    <ID>MatchingDeclarationName:TestApplication.kt$IntegrationTest</ID>
+    <ID>MaxLineLength:Application.kt$val yaml = resource?.readText() ?: return@get call.respondText("Spec not found", status = HttpStatusCode.NotFound)</ID>
+    <ID>MaxLineLength:BeneficiaryTable.kt$BeneficiaryTable$val idCourse = integer("id_course").references(CourseTable.id, onDelete = org.jetbrains.exposed.sql.ReferenceOption.SET_NULL)</ID>
+    <ID>MaxLineLength:BeneficiaryValidator.kt$BeneficiaryValidator$if (dto.studentNumber != null) validateStudentNumber(dto.studentNumber, isUpdate = true, existingNumber = existingStudentNumber)</ID>
+    <ID>MaxLineLength:DatabaseFactory.kt$DatabaseFactory$Triple(url, System.getenv("JDBC_DATABASE_USER") ?: "postgres", System.getenv("JDBC_DATABASE_PASSWORD") ?: "")</ID>
+    <ID>MaxLineLength:DatabaseFactory.kt$DatabaseFactory$Triple(url, dotenv["DB_USER"] ?: System.getenv("DB_USER") ?: "postgres", dotenv["DB_PASS"] ?: System.getenv("DB_PASS") ?: "")</ID>
+    <ID>MaxLineLength:DeliveryItemService.kt$DeliveryItemService$DeliveryItemTable.deleteWhere { (DeliveryItemTable.idDelivery eq uuid) and (DeliveryItemTable.idGood eq goodId) }</ID>
+    <ID>MaxLineLength:DeliveryService.kt$DeliveryService$"category" to GoodTable.select { GoodTable.id eq itemRow[DeliveryItemTable.idGood] }.singleOrNull()?.get(GoodTable.category)</ID>
+    <ID>MaxLineLength:DeliveryService.kt$DeliveryService$"goodName" to GoodTable.select { GoodTable.id eq itemRow[DeliveryItemTable.idGood] }.singleOrNull()?.get(GoodTable.name)</ID>
+    <ID>MaxLineLength:SchedulingTable.kt$SchedulingTable$val idBeneficiary = integer("id_beneficiary").references(BeneficiaryTable.studentNumber, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.CASCADE)</ID>
+    <ID>MaxLineLength:SchedulingTable.kt$SchedulingTable$val idCollaborator = uuid("id_collaborator").references(CollaboratorTable.id_collaborator, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.SET_NULL)</ID>
+    <ID>MaximumLineLength:Application.kt$ </ID>
+    <ID>MaximumLineLength:BeneficiaryTable.kt$BeneficiaryTable$ </ID>
+    <ID>MaximumLineLength:BeneficiaryValidator.kt$BeneficiaryValidator$ </ID>
+    <ID>MaximumLineLength:DatabaseFactory.kt$DatabaseFactory$ </ID>
+    <ID>MaximumLineLength:DeliveryItemService.kt$DeliveryItemService$ </ID>
+    <ID>MaximumLineLength:DeliveryService.kt$DeliveryService$ </ID>
+    <ID>MaximumLineLength:SchedulingTable.kt$SchedulingTable$ </ID>
+    <ID>NewLineAtEndOfFile:ActivityLogCreateDTO.kt$com.ipca.dto.ActivityLog.ActivityLogCreateDTO.kt</ID>
+    <ID>NewLineAtEndOfFile:ActivityLogResponseDTO.kt$com.ipca.dto.ActivityLog.ActivityLogResponseDTO.kt</ID>
+    <ID>NewLineAtEndOfFile:BeneficiaryCreateDTO.kt$com.ipca.dto.Beneficiary.BeneficiaryCreateDTO.kt</ID>
+    <ID>NewLineAtEndOfFile:BeneficiaryRoutesTest.kt$com.ipca.integration.routes.BeneficiaryRoutesTest.kt</ID>
+    <ID>NewLineAtEndOfFile:CollaboratorPrincipal.kt$com.ipca.auth.CollaboratorPrincipal.kt</ID>
+    <ID>NewLineAtEndOfFile:CollaboratorRoutes.kt$com.ipca.routes.CollaboratorRoutes.kt</ID>
+    <ID>NewLineAtEndOfFile:CollaboratorService.kt$com.ipca.services.CollaboratorService.kt</ID>
+    <ID>NewLineAtEndOfFile:CollaboratorTable.kt$com.ipca.models.CollaboratorTable.kt</ID>
+    <ID>NewLineAtEndOfFile:DeliveryItemRoutes.kt$com.ipca.routes.DeliveryItemRoutes.kt</ID>
+    <ID>NewLineAtEndOfFile:DeliveryItemService.kt$com.ipca.services.DeliveryItemService.kt</ID>
+    <ID>NewLineAtEndOfFile:DeliveryRoutes.kt$com.ipca.routes.DeliveryRoutes.kt</ID>
+    <ID>NewLineAtEndOfFile:DeliveryTable.kt$com.ipca.models.DeliveryTable.kt</ID>
+    <ID>NewLineAtEndOfFile:DonationTable.kt$com.ipca.models.DonationTable.kt</ID>
+    <ID>NewLineAtEndOfFile:GoodStatusTest.kt$.GoodStatusTest.kt</ID>
+    <ID>NewLineAtEndOfFile:SchedulingTable.kt$com.ipca.models.SchedulingTable.kt</ID>
+    <ID>NewLineAtEndOfFile:SessionTable.kt$com.ipca.models.SessionTable.kt</ID>
+    <ID>NoBlankLineBeforeRbrace:BeneficiaryTable.kt$BeneficiaryTable$ </ID>
+    <ID>NoConsecutiveBlankLines:Application.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:CourseTable.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:DonationTable.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:NewsTable.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:PasswordUtils.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:PasswordUtils.kt$PasswordUtils$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:AuthRoutes.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:BeneficiaryRoutes.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:CourseRoutes.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:configureAuth.kt$ </ID>
+    <ID>NoMultipleSpaces:GoodExpirationLogicTest.kt$GoodExpirationLogicTest$ </ID>
+    <ID>NoMultipleSpaces:ValidationUtilsTest.kt$ValidationUtilsTest$ </ID>
+    <ID>NoSemicolons:EntityType.kt$EntityType.NEWS$;</ID>
+    <ID>NoTrailingSpaces:ActivityLogValidator.kt$ActivityLogValidator$ </ID>
+    <ID>NoTrailingSpaces:BeneficiaryValidator.kt$BeneficiaryValidator$ </ID>
+    <ID>NoTrailingSpaces:CampaignValidator.kt$CampaignValidator$ </ID>
+    <ID>NoTrailingSpaces:CollaboratorValidator.kt$CollaboratorValidator$ </ID>
+    <ID>NoTrailingSpaces:CourseValidator.kt$CourseValidator$ </ID>
+    <ID>NoTrailingSpaces:DeliveryItemValidator.kt$DeliveryItemValidator$ </ID>
+    <ID>NoTrailingSpaces:DeliveryValidator.kt$DeliveryValidator$ </ID>
+    <ID>NoTrailingSpaces:DonationValidator.kt$DonationValidator$ </ID>
+    <ID>NoTrailingSpaces:EntityValidator.kt$EntityValidator$ </ID>
+    <ID>NoTrailingSpaces:ExpirationAlertValidator.kt$ExpirationAlertValidator$ </ID>
+    <ID>NoTrailingSpaces:GoodValidator.kt$GoodValidator$ </ID>
+    <ID>NoTrailingSpaces:NewsValidator.kt$NewsValidator$ </ID>
+    <ID>NoTrailingSpaces:SchedulingValidator.kt$SchedulingValidator$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$BeneficiaryValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$CampaignValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$CollaboratorValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$CourseValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$DonationValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$EntityValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$GoodValidatorTest$ </ID>
+    <ID>NoTrailingSpaces:ValidationTests.kt$NewsValidatorTest$ </ID>
+    <ID>NoUnusedImports:AuthRoutes.kt$com.ipca.routes.AuthRoutes.kt</ID>
+    <ID>NoUnusedImports:BeneficiaryTable.kt$com.ipca.models.BeneficiaryTable.kt</ID>
+    <ID>NoUnusedImports:CollaboratorLoginResponseDTO.kt$com.ipca.dto.Collaborator.CollaboratorLoginResponseDTO.kt</ID>
+    <ID>NoUnusedImports:DeliveryTable.kt$com.ipca.models.DeliveryTable.kt</ID>
+    <ID>NoUnusedImports:DonationValidator.kt$com.ipca.validation.DonationValidator.kt</ID>
+    <ID>NoUnusedImports:EntityValidator.kt$com.ipca.validation.EntityValidator.kt</ID>
+    <ID>NoUnusedImports:SchedulingResponseDTO.kt$com.ipca.dto.Schedulling.SchedulingResponseDTO.kt</ID>
+    <ID>NoUnusedImports:SchedulingTable.kt$com.ipca.models.SchedulingTable.kt</ID>
+    <ID>NoUnusedImports:TestApplication.kt$com.ipca.TestApplication.kt</ID>
+    <ID>NoUnusedImports:ValidationTests.kt$com.ipca.unit.validation.ValidationTests.kt</ID>
+    <ID>NoWildcardImports:ActivityLogRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:ActivityLogRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:ActivityLogRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:ActivityLogRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:ActivityLogRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:ActivityLogRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:ActivityLogService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:ActivityLogger.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:Application.kt$import com.ipca.routes.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.serialization.kotlinx.json.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.auth.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.engine.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.netty.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.plugins.contentnegotiation.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.plugins.openapi.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.plugins.swagger.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:Application.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:AuthRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:AuthRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:AuthRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:AuthRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:AuthRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:AuthRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:AuthRoutesTest.kt$import io.ktor.client.statement.*</ID>
+    <ID>NoWildcardImports:AuthRoutesTest.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:AuthService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:BeneficiaryRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:BeneficiaryService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:CollaboratorRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:CollaboratorService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:CourseRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:CourseRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:CourseRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:CourseRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:CourseRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:CourseRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:CourseService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:DatabaseFactory.kt$import com.ipca.models.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:DeliveryItemRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:DeliveryItemService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:DeliveryRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:DeliveryService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:DonationRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:DonationRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:DonationRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:DonationRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:DonationRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:DonationRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:DonationService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:EntityRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:EntityRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:EntityRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:EntityRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:EntityRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:EntityRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:EntityService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:ExpirationAlertService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:GoodRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:GoodRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:GoodRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:GoodRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:GoodRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:GoodRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:GoodService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:NewsRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:NewsRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:NewsRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:NewsRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:NewsRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:NewsRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:NewsService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutes.kt$import io.ktor.http.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>NoWildcardImports:SchedulingRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>NoWildcardImports:SchedulingService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>NoWildcardImports:TestApplication.kt$import io.ktor.server.testing.*</ID>
+    <ID>NoWildcardImports:ValidationTests.kt$import com.ipca.exceptions.*</ID>
+    <ID>NoWildcardImports:ValidationTests.kt$import com.ipca.validation.*</ID>
+    <ID>NoWildcardImports:ValidationTests.kt$import kotlin.test.*</ID>
+    <ID>NoWildcardImports:configureAuth.kt$import io.ktor.server.application.*</ID>
+    <ID>NoWildcardImports:configureAuth.kt$import io.ktor.server.auth.*</ID>
+    <ID>PackageName:ActivityLogCreateDTO.kt$package com.ipca.dto.ActivityLog</ID>
+    <ID>PackageName:ActivityLogResponseDTO.kt$package com.ipca.dto.ActivityLog</ID>
+    <ID>PackageName:BeneficiaryCreateDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageName:BeneficiaryDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageName:BeneficiaryResponseDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageName:BeneficiarySummaryDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageName:BeneficiaryUpdateDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageName:CampaignCreateDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageName:CampaignResponseDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageName:CampaignSummaryDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageName:CampaignUpdateDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageName:CollaboratorCreateDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageName:CollaboratorLoginResponseDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageName:CollaboratorResponseDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageName:CollaboratorSummaryDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageName:CollaboratorUpdateDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageName:CourseCreateDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageName:CourseResponseDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageName:CourseUpdateDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageName:DeliveryCreateDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageName:DeliveryItemCreateDTO.kt$package com.ipca.dto.DeliveryItem</ID>
+    <ID>PackageName:DeliveryItemResponseDTO.kt$package com.ipca.dto.DeliveryItem</ID>
+    <ID>PackageName:DeliveryResponseDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageName:DeliveryUpdateStatusDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageName:DonationCreateDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageName:DonationResponseDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageName:DonationUpdateDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageName:EntityCreateDTO.kt$package com.ipca.dto.Entity</ID>
+    <ID>PackageName:EntityResponseDTO.kt$package com.ipca.dto.Entity</ID>
+    <ID>PackageName:ExpirationAlertCreateDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageName:ExpirationAlertResolveDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageName:ExpirationAlertResponseDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageName:GoodCreateDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageName:GoodResponseDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageName:GoodUpdateDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageName:NewsCreateDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageName:NewsResponseDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageName:NewsUpdateDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageName:SchedulingCreateDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageName:SchedulingResponseDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageName:SchedulingUpdateDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageName:SessionCreateDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>PackageName:SessionResponseDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>PackageName:SessionValidateResponseDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>PackageNaming:ActivityLogCreateDTO.kt$package com.ipca.dto.ActivityLog</ID>
+    <ID>PackageNaming:ActivityLogResponseDTO.kt$package com.ipca.dto.ActivityLog</ID>
+    <ID>PackageNaming:BeneficiaryCreateDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageNaming:BeneficiaryDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageNaming:BeneficiaryResponseDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageNaming:BeneficiarySummaryDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageNaming:BeneficiaryUpdateDTO.kt$package com.ipca.dto.Beneficiary</ID>
+    <ID>PackageNaming:CampaignCreateDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageNaming:CampaignResponseDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageNaming:CampaignSummaryDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageNaming:CampaignUpdateDTO.kt$package com.ipca.dto.Campaign</ID>
+    <ID>PackageNaming:CollaboratorCreateDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageNaming:CollaboratorLoginResponseDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageNaming:CollaboratorResponseDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageNaming:CollaboratorSummaryDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageNaming:CollaboratorUpdateDTO.kt$package com.ipca.dto.Collaborator</ID>
+    <ID>PackageNaming:CourseCreateDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageNaming:CourseResponseDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageNaming:CourseUpdateDTO.kt$package com.ipca.dto.Course</ID>
+    <ID>PackageNaming:DeliveryCreateDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageNaming:DeliveryItemCreateDTO.kt$package com.ipca.dto.DeliveryItem</ID>
+    <ID>PackageNaming:DeliveryItemResponseDTO.kt$package com.ipca.dto.DeliveryItem</ID>
+    <ID>PackageNaming:DeliveryResponseDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageNaming:DeliveryUpdateStatusDTO.kt$package com.ipca.dto.Delivery</ID>
+    <ID>PackageNaming:DonationCreateDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageNaming:DonationResponseDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageNaming:DonationUpdateDTO.kt$package com.ipca.dto.Donation</ID>
+    <ID>PackageNaming:EntityCreateDTO.kt$package com.ipca.dto.Entity</ID>
+    <ID>PackageNaming:EntityResponseDTO.kt$package com.ipca.dto.Entity</ID>
+    <ID>PackageNaming:ExpirationAlertCreateDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageNaming:ExpirationAlertResolveDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageNaming:ExpirationAlertResponseDTO.kt$package com.ipca.dto.ExpirationAlert</ID>
+    <ID>PackageNaming:GoodCreateDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageNaming:GoodResponseDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageNaming:GoodUpdateDTO.kt$package com.ipca.dto.Good</ID>
+    <ID>PackageNaming:NewsCreateDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageNaming:NewsResponseDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageNaming:NewsUpdateDTO.kt$package com.ipca.dto.News</ID>
+    <ID>PackageNaming:SchedulingCreateDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageNaming:SchedulingResponseDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageNaming:SchedulingUpdateDTO.kt$package com.ipca.dto.Schedulling</ID>
+    <ID>PackageNaming:SessionCreateDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>PackageNaming:SessionResponseDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>PackageNaming:SessionValidateResponseDTO.kt$package com.ipca.dto.Session</ID>
+    <ID>SpacingAroundCurly:CollaboratorTable.kt$CollaboratorTable${</ID>
+    <ID>SpacingAroundCurly:DeliveryTable.kt$DeliveryTable${</ID>
+    <ID>SpacingAroundCurly:DonationTable.kt$DonationTable${</ID>
+    <ID>SpacingAroundCurly:SchedulingTable.kt$SchedulingTable${</ID>
+    <ID>SpacingAroundCurly:SessionTable.kt$SessionTable${</ID>
+    <ID>SwallowedException:ActivityLogService.kt$ActivityLogService$e: Exception</ID>
+    <ID>SwallowedException:AuthRoutes.kt$e: Exception</ID>
+    <ID>SwallowedException:AuthService.kt$AuthService$e: Exception</ID>
+    <ID>SwallowedException:CollaboratorService.kt$CollaboratorService$e: Exception</ID>
+    <ID>SwallowedException:DeliveryItemService.kt$DeliveryItemService$e: Exception</ID>
+    <ID>SwallowedException:DeliveryService.kt$DeliveryService$e: Exception</ID>
+    <ID>SwallowedException:DonationService.kt$DonationService$e: Exception</ID>
+    <ID>SwallowedException:GoodService.kt$GoodService$e: Exception</ID>
+    <ID>SwallowedException:SchedulingValidator.kt$SchedulingValidator$e: IllegalArgumentException</ID>
+    <ID>SwallowedException:configureAuth.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ActivityLogRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ActivityLogService.kt$ActivityLogService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AuthRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AuthService.kt$AuthService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:BeneficiaryRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CollaboratorRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CollaboratorService.kt$CollaboratorService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CourseRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DatabaseFactory.kt$DatabaseFactory$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DeliveryItemRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DeliveryItemService.kt$DeliveryItemService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DeliveryRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DeliveryService.kt$DeliveryService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DonationRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DonationService.kt$DonationService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:EntityRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ExpirationAlertRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:GoodRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:GoodService.kt$GoodService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:NewsRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SchedulingRoutes.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:configureAuth.kt$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:AuthService.kt$AuthService$throw Exception("Invalid email or password")</ID>
+    <ID>UnusedParameter:CampaignValidator.kt$CampaignValidator$dateEnd: LocalDate</ID>
+    <ID>UnusedParameter:CampaignValidator.kt$CampaignValidator$dateStart: LocalDate</ID>
+    <ID>WildcardImport:ActivityLogRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:ActivityLogRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:ActivityLogRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:ActivityLogRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:ActivityLogRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:ActivityLogRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:ActivityLogService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:ActivityLogger.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:Application.kt$import com.ipca.routes.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.serialization.kotlinx.json.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.auth.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.engine.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.netty.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.plugins.contentnegotiation.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.plugins.openapi.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.plugins.swagger.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:Application.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:AuthRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:AuthRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:AuthRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:AuthRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:AuthRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:AuthRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:AuthRoutesTest.kt$import io.ktor.client.statement.*</ID>
+    <ID>WildcardImport:AuthRoutesTest.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:AuthService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:BeneficiaryRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:BeneficiaryService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:CollaboratorRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:CollaboratorRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:CollaboratorRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:CollaboratorRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:CollaboratorRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:CollaboratorRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:CollaboratorService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:CourseRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:CourseRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:CourseRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:CourseRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:CourseRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:CourseRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:CourseService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:DatabaseFactory.kt$import com.ipca.models.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:DeliveryItemRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:DeliveryItemService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:DeliveryRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:DeliveryRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:DeliveryRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:DeliveryRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:DeliveryRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:DeliveryRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:DeliveryService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:DonationRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:DonationRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:DonationRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:DonationRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:DonationRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:DonationRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:DonationService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:EntityRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:EntityRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:EntityRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:EntityRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:EntityRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:EntityRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:EntityService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:ExpirationAlertRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:ExpirationAlertService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:GoodRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:GoodRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:GoodRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:GoodRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:GoodRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:GoodRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:GoodService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:NewsRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:NewsRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:NewsRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:NewsRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:NewsRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:NewsRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:NewsService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:SchedulingRoutes.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:SchedulingRoutes.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:SchedulingRoutes.kt$import io.ktor.server.request.*</ID>
+    <ID>WildcardImport:SchedulingRoutes.kt$import io.ktor.server.response.*</ID>
+    <ID>WildcardImport:SchedulingRoutes.kt$import io.ktor.server.routing.*</ID>
+    <ID>WildcardImport:SchedulingRoutesTest.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:SchedulingService.kt$import org.jetbrains.exposed.sql.*</ID>
+    <ID>WildcardImport:TestApplication.kt$import io.ktor.server.testing.*</ID>
+    <ID>WildcardImport:ValidationTests.kt$import com.ipca.exceptions.*</ID>
+    <ID>WildcardImport:ValidationTests.kt$import com.ipca.validation.*</ID>
+    <ID>WildcardImport:ValidationTests.kt$import kotlin.test.*</ID>
+    <ID>WildcardImport:configureAuth.kt$import io.ktor.server.application.*</ID>
+    <ID>WildcardImport:configureAuth.kt$import io.ktor.server.auth.*</ID>
+    <ID>Wrapping:ActivityLogRoutesTest.kt$ActivityLogRoutesTest$(</ID>
+    <ID>Wrapping:AuthRoutesTest.kt$AuthRoutesTest$(</ID>
+    <ID>Wrapping:BeneficiaryRoutesTest.kt$BeneficiaryRoutesTest$(</ID>
+    <ID>Wrapping:CollaboratorRoutesTest.kt$CollaboratorRoutesTest$(</ID>
+    <ID>Wrapping:CourseRoutesTest.kt$CourseRoutesTest$(</ID>
+    <ID>Wrapping:DeliveryItemRoutesTest.kt$DeliveryItemRoutesTest$(</ID>
+    <ID>Wrapping:DeliveryRoutesTest.kt$DeliveryRoutesTest$(</ID>
+    <ID>Wrapping:DeliveryService.kt$DeliveryService$GoodTable.id eq itemRow[DeliveryItemTable.idGood]</ID>
+    <ID>Wrapping:DonationRoutesTest.kt$DonationRoutesTest$(</ID>
+    <ID>Wrapping:EntityRoutesTest.kt$EntityRoutesTest$(</ID>
+    <ID>Wrapping:ExpirationAlertRoutesTest.kt$ExpirationAlertRoutesTest$(</ID>
+    <ID>Wrapping:GoodRoutesTest.kt$GoodRoutesTest$(</ID>
+    <ID>Wrapping:NewsRoutesTest.kt$NewsRoutesTest$(</ID>
+    <ID>Wrapping:SchedulingRoutesTest.kt$SchedulingRoutesTest$(</ID>
+  </CurrentIssues>
+</SmellBaseline>
