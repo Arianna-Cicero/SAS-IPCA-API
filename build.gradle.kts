@@ -52,6 +52,10 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.4.14")
     // bcrypt dependency
     implementation("at.favre.lib:bcrypt:0.9.0")
+    // JWT
+    implementation("com.auth0:java-jwt:4.4.0")
+    // Status pages for error handling
+    implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
 
     // Testing
     testImplementation(kotlin("test"))
@@ -61,6 +65,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    // Test database
+    testImplementation("com.h2database:h2:2.2.220")
+    testImplementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    testImplementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
 
     // Code quality
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.5")
