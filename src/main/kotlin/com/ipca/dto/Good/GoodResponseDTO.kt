@@ -2,7 +2,7 @@ package com.ipca.dto.Good
 
 import com.ipca.dto.Donation.DonationResponseDTO
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Serializable
 data class GoodResponseDTO(

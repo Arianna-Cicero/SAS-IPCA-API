@@ -8,6 +8,8 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.toJava
 
 object DonationService {
 
@@ -17,7 +19,7 @@ object DonationService {
                 id = row[DonationTable.id].toString(),
                 nameDonor = row[DonationTable.nameDonor],
                 type = row[DonationTable.type],
-                dateDonor = row[DonationTable.dateDonor],
+                dateDonor = row[DonationTable.dateDonor].toKotlinx(),
                 description = row[DonationTable.description]
             )
         }
@@ -34,7 +36,7 @@ object DonationService {
                         id = row[DonationTable.id].toString(),
                         nameDonor = row[DonationTable.nameDonor],
                         type = row[DonationTable.type],
-                        dateDonor = row[DonationTable.dateDonor],
+                        dateDonor = row[DonationTable.dateDonor].toKotlinx(),
                         description = row[DonationTable.description]
                     )
                 }
@@ -49,7 +51,7 @@ object DonationService {
             it[DonationTable.id] = id
             it[nameDonor] = request.nameDonor
             it[type] = request.type
-            it[dateDonor] = request.dateDonor
+            it[dateDonor] = request.dateDonor.toJava()
             it[description] = request.description
         }
         id.toString()
@@ -61,7 +63,7 @@ object DonationService {
             DonationTable.update({ DonationTable.id eq uuid }) { row ->
                 request.nameDonor?.let { row[DonationTable.nameDonor] = it }
                 request.type?.let { row[DonationTable.type] = it }
-                request.dateDonor?.let { row[DonationTable.dateDonor] = it }
+                request.dateDonor?.let { row[DonationTable.dateDonor] = it.toJava() }
                 request.description?.let { row[DonationTable.description] = it }
             }
         } catch (e: Exception) {

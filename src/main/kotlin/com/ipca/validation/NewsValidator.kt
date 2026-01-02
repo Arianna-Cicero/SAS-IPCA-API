@@ -7,7 +7,8 @@ import com.ipca.exceptions.ValidationException
 import com.ipca.exceptions.EntityNotFoundException
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import com.ipca.utils.todayKotlinx
 
 object NewsValidator {
     
@@ -44,7 +45,7 @@ object NewsValidator {
     }
     
     private fun validatePublicationDate(publicationDate: LocalDate) {
-        if (publicationDate.isAfter(LocalDate.now())) {
+        if (publicationDate > todayKotlinx()) {
             throw ValidationException("Publication date cannot be in the future", "news")
         }
     }

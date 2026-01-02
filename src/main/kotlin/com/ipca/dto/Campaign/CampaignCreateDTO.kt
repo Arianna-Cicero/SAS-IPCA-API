@@ -1,7 +1,7 @@
 package com.ipca.dto.Campaign
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Serializable
 data class CampaignCreateDTO(

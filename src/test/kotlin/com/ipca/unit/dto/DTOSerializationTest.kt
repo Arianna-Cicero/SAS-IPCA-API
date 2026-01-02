@@ -3,8 +3,9 @@ package com.ipca.unit.dto
 import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO
 import com.ipca.dto.Campaign.CampaignResponseDTO
 import com.ipca.dto.Donation.DonationResponseDTO
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
-import java.time.LocalDate
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -53,11 +54,12 @@ class DTOSerializationTest {
 
     @Test
     fun `should serialize DonationResponseDTO with nullable description`() {
+        val kDate = LocalDate(2025, 12, 20)
         val dtoWithDescription = DonationResponseDTO(
             id = "550e8400-e29b-41d4-a716-446655440000",
             nameDonor = "John Doe",
             type = "food",
-            dateDonor = LocalDate.of(2025, 12, 20),
+            dateDonor = kDate,
             description = "Food donation"
         )
 
@@ -69,11 +71,12 @@ class DTOSerializationTest {
 
     @Test
     fun `should serialize DonationResponseDTO with null description`() {
+        val kDate = LocalDate(2025, 12, 20)
         val dtoWithoutDescription = DonationResponseDTO(
             id = "550e8400-e29b-41d4-a716-446655440000",
             nameDonor = "John Doe",
             type = "clothing",
-            dateDonor = LocalDate.of(2025, 12, 20),
+            dateDonor = kDate,
             description = null
         )
 
@@ -85,12 +88,14 @@ class DTOSerializationTest {
 
     @Test
     fun `should serialize CampaignResponseDTO with LocalDate`() {
+        val kStart = LocalDate(2025, 12, 1)
+        val kEnd = LocalDate(2025, 12, 31)
         val dto = CampaignResponseDTO(
             id = 1,
             title = "Christmas Campaign",
             description = "Campaign for Christmas",
-            dateStart = LocalDate.of(2025, 12, 1),
-            dateEnd = LocalDate.of(2025, 12, 31),
+            dateStart = kStart,
+            dateEnd = kEnd,
             totalCollected = 5000
         )
 

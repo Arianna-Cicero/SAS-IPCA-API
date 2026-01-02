@@ -19,7 +19,7 @@ fun Application.configureAuth() {
 
                 val collaboratorId = AuthService.validateToken(token)
                 if (collaboratorId != null) {
-                    CollaboratorPrincipal(collaboratorId)
+                    CollaboratorPrincipal(collaboratorId.toString())
                 } else {
                     null
                 }

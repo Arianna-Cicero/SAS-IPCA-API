@@ -1,12 +1,11 @@
 package com.ipca.dto.Schedulling
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
-import java.util.UUID
+import kotlinx.datetime.LocalDate
 
 @Serializable
 data class SchedulingCreateDTO(
     val beneficiaryId: Int,
-    val collaboratorId: UUID,
+    val collaboratorId: String,
     val dateDelivery: LocalDate
 )

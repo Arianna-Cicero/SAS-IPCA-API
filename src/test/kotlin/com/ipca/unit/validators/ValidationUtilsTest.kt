@@ -1,6 +1,6 @@
 package com.ipca.unit.validators
 
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -65,23 +65,23 @@ class ValidationUtilsTest {
 
     @Test
     fun `should validate date ranges`() {
-        val startDate = LocalDate.of(2025, 12, 1)
-        val endDate = LocalDate.of(2025, 12, 31)
+        val startDate = LocalDate(2025, 12, 1)
+        val endDate = LocalDate(2025, 12, 31)
 
         assertTrue(isValidDateRange(startDate, endDate))
     }
 
     @Test
     fun `should reject invalid date ranges`() {
-        val startDate = LocalDate.of(2025, 12, 31)
-        val endDate = LocalDate.of(2025, 12, 1)
+        val startDate = LocalDate(2025, 12, 31)
+        val endDate = LocalDate(2025, 12, 1)
 
         assertFalse(isValidDateRange(startDate, endDate))
     }
 
     @Test
     fun `should accept equal start and end dates`() {
-        val date = LocalDate.of(2025, 12, 20)
+        val date = LocalDate(2025, 12, 20)
 
         assertTrue(isValidDateRange(date, date))
     }
@@ -97,6 +97,6 @@ class ValidationUtilsTest {
     }
 
     private fun isValidDateRange(startDate: LocalDate, endDate: LocalDate): Boolean {
-        return !startDate.isAfter(endDate)
+        return !(startDate > endDate)
     }
 }

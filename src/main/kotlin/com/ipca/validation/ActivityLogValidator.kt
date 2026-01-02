@@ -34,13 +34,18 @@ object ActivityLogValidator {
         }
     }
     
-    private fun validateCollaboratorExists(collaboratorId: UUID) {
-        val exists = transaction {
-            CollaboratorTable.select { CollaboratorTable.id_collaborator eq collaboratorId }.count() > 0
+    private fun validateCollaboratorExists(collaboratorId: String) {
+        val exists = try {
+            val uuid = UUID.fromString(collaboratorId)
+            transaction {
+                CollaboratorTable.select { CollaboratorTable.id_collaborator eq uuid }.count() > 0
+            }
+        } catch (e: IllegalArgumentException) {
+            false
         }
         
         if (!exists) {
-            throw EntityNotFoundException("collaborator", collaboratorId.toString())
+            throw EntityNotFoundException("collaborator", collaboratorId)
         }
     }
 }

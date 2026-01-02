@@ -4,7 +4,6 @@ import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO
 import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO
 import com.ipca.dto.Collaborator.CollaboratorCreateDTO
 import com.ipca.dto.Good.GoodCreateDTO
-import com.ipca.dto.Good.GoodUpdateDTO
 import com.ipca.dto.Donation.DonationCreateDTO
 import com.ipca.dto.Campaign.CampaignCreateDTO
 import com.ipca.dto.News.NewsCreateDTO
@@ -12,7 +11,7 @@ import com.ipca.dto.Entity.EntityCreateDTO
 import com.ipca.dto.Course.CourseCreateDTO
 import com.ipca.exceptions.*
 import com.ipca.validation.*
-import java.time.LocalDate
+import com.ipca.utils.*
 import kotlin.test.*
 
 class BeneficiaryValidatorTest {
@@ -156,8 +155,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "FOOD",
             quantity = 100,
-            intake = LocalDate.now().minusDays(1),
-            dateValidity = LocalDate.now().plusMonths(6),
+            intake = todayKotlinx().minusDays(1),
+            dateValidity = todayKotlinx().plusMonths(6),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertDoesNotFail { GoodValidator.validateCreate(dto) }
@@ -169,8 +168,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "INVALID_CATEGORY",
             quantity = 100,
-            intake = LocalDate.now().minusDays(1),
-            dateValidity = LocalDate.now().plusMonths(6),
+            intake = todayKotlinx().minusDays(1),
+            dateValidity = todayKotlinx().plusMonths(6),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertFailsWith<ValidationException> {
@@ -184,8 +183,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "FOOD",
             quantity = -10,
-            intake = LocalDate.now().minusDays(1),
-            dateValidity = LocalDate.now().plusMonths(6),
+            intake = todayKotlinx().minusDays(1),
+            dateValidity = todayKotlinx().plusMonths(6),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertFailsWith<ValidationException> {
@@ -199,8 +198,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "FOOD",
             quantity = 100,
-            intake = LocalDate.now().plusDays(1),
-            dateValidity = LocalDate.now().plusMonths(6),
+            intake = todayKotlinx().plusDays(1),
+            dateValidity = todayKotlinx().plusMonths(6),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertFailsWith<ValidationException> {
@@ -214,8 +213,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "FOOD",
             quantity = 100,
-            intake = LocalDate.now().minusDays(10),
-            dateValidity = LocalDate.now().minusDays(1),
+            intake = todayKotlinx().minusDays(10),
+            dateValidity = todayKotlinx().minusDays(1),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertFailsWith<ValidationException> {
@@ -229,8 +228,8 @@ class GoodValidatorTest {
             name = "Rice",
             category = "FOOD",
             quantity = 100,
-            intake = LocalDate.now(),
-            dateValidity = LocalDate.now().minusDays(1),
+            intake = todayKotlinx(),
+            dateValidity = todayKotlinx().minusDays(1),
             donationId = "550e8400-e29b-41d4-a716-446655440000"
         )
         assertFailsWith<ValidationException> {
@@ -246,7 +245,7 @@ class DonationValidatorTest {
         val dto = DonationCreateDTO(
             nameDonor = "John Doe Foundation",
             type = "GOODS",
-            dateDonor = LocalDate.now()
+            dateDonor = todayKotlinx()
         )
         assertDoesNotFail { DonationValidator.validateCreate(dto) }
     }
@@ -256,7 +255,7 @@ class DonationValidatorTest {
         val dto = DonationCreateDTO(
             nameDonor = "",
             type = "GOODS",
-            dateDonor = LocalDate.now()
+            dateDonor = todayKotlinx()
         )
         assertFailsWith<ValidationException> {
             DonationValidator.validateCreate(dto)
@@ -268,7 +267,7 @@ class DonationValidatorTest {
         val dto = DonationCreateDTO(
             nameDonor = "John Doe",
             type = "INVALID_TYPE",
-            dateDonor = LocalDate.now()
+            dateDonor = todayKotlinx()
         )
         assertFailsWith<ValidationException> {
             DonationValidator.validateCreate(dto)
@@ -281,7 +280,7 @@ class DonationValidatorTest {
             val dto = DonationCreateDTO(
                 nameDonor = "John Doe",
                 type = type,
-                dateDonor = LocalDate.now()
+                dateDonor = todayKotlinx()
             )
             assertDoesNotFail { DonationValidator.validateCreate(dto) }
         }
@@ -295,8 +294,8 @@ class CampaignValidatorTest {
         val dto = CampaignCreateDTO(
             title = "Winter Aid Campaign",
             description = "Help those in need during winter",
-            dateStart = LocalDate.now().minusDays(30),
-            dateEnd = LocalDate.now().plusDays(30)
+            dateStart = todayKotlinx().minusDays(30),
+            dateEnd = todayKotlinx().plusDays(30)
         )
         assertDoesNotFail { CampaignValidator.validateCreate(dto) }
     }
@@ -306,8 +305,8 @@ class CampaignValidatorTest {
         val dto = CampaignCreateDTO(
             title = "",
             description = "Help those in need during winter",
-            dateStart = LocalDate.now().minusDays(30),
-            dateEnd = LocalDate.now().plusDays(30)
+            dateStart = todayKotlinx().minusDays(30),
+            dateEnd = todayKotlinx().plusDays(30)
         )
         assertFailsWith<ValidationException> {
             CampaignValidator.validateCreate(dto)
@@ -319,8 +318,8 @@ class CampaignValidatorTest {
         val dto = CampaignCreateDTO(
             title = "Winter Aid Campaign",
             description = "Help those in need during winter",
-            dateStart = LocalDate.now().plusDays(30),
-            dateEnd = LocalDate.now().minusDays(30)
+            dateStart = todayKotlinx().plusDays(30),
+            dateEnd = todayKotlinx().minusDays(30)
         )
         assertFailsWith<ValidationException> {
             CampaignValidator.validateCreate(dto)
@@ -335,7 +334,7 @@ class NewsValidatorTest {
         val dto = NewsCreateDTO(
             title = "New Aid Initiative",
             content = "We are launching a new program to help the community",
-            datePublication = LocalDate.now()
+            datePublication = todayKotlinx()
         )
         assertDoesNotFail { NewsValidator.validateCreate(dto) }
     }
@@ -345,7 +344,7 @@ class NewsValidatorTest {
         val dto = NewsCreateDTO(
             title = "Aid",
             content = "We are launching a new program to help the community",
-            datePublication = LocalDate.now()
+            datePublication = todayKotlinx()
         )
         assertFailsWith<ValidationException> {
             NewsValidator.validateCreate(dto)
@@ -357,7 +356,7 @@ class NewsValidatorTest {
         val dto = NewsCreateDTO(
             title = "New Aid Initiative",
             content = "We are launching a new program to help the community",
-            datePublication = LocalDate.now().plusDays(1)
+            datePublication = todayKotlinx().plusDays(1)
         )
         assertFailsWith<ValidationException> {
             NewsValidator.validateCreate(dto)

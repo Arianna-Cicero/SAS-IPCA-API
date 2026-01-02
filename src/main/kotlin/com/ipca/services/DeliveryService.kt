@@ -9,6 +9,8 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.toJava
 
 object DeliveryService {
 
@@ -29,7 +31,7 @@ object DeliveryService {
             DeliveryResponseDTO(
                 id = deliveryId.toString(),
                 schedulingId = row[DeliveryTable.idScheduling],
-                dateDelivery = row[DeliveryTable.dateDelivery],
+                dateDelivery = row[DeliveryTable.dateDelivery].toKotlinx(),
                 status = row[DeliveryTable.status],
                 items = emptyList()
             )
@@ -46,7 +48,7 @@ object DeliveryService {
                     DeliveryResponseDTO(
                         id = row[DeliveryTable.id].toString(),
                         schedulingId = row[DeliveryTable.idScheduling],
-                        dateDelivery = row[DeliveryTable.dateDelivery],
+                        dateDelivery = row[DeliveryTable.dateDelivery].toKotlinx(),
                         status = row[DeliveryTable.status],
                         items = emptyList()
                     )
@@ -61,7 +63,7 @@ object DeliveryService {
         DeliveryTable.insert {
             it[DeliveryTable.id] = id
             it[idScheduling] = request.schedulingId
-            it[dateDelivery] = request.dateDelivery
+            it[dateDelivery] = request.dateDelivery.toJava()
             it[status] = "pending"
         }
         id.toString()

@@ -1,16 +1,17 @@
 package com.ipca.unit.logic
 
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import com.ipca.utils.toJava
 
 class GoodExpirationLogicTest {
 
     @Test
     fun `should identify expired goods`() {
-        val validityDate = LocalDate.now().minusDays(1)
+        val validityDate = LocalDate(2024, 12, 31)
         val isExpired = checkIfExpired(validityDate)
 
         assertTrue(isExpired)
@@ -18,7 +19,7 @@ class GoodExpirationLogicTest {
 
     @Test
     fun `should identify non-expired goods`() {
-        val validityDate = LocalDate.now().plusDays(10)
+        val validityDate = LocalDate(2026, 1, 11)
         val isExpired = checkIfExpired(validityDate)
 
         assertFalse(isExpired)
@@ -26,7 +27,7 @@ class GoodExpirationLogicTest {
 
     @Test
     fun `should identify goods expiring today as expired`() {
-        val validityDate = LocalDate.now()
+        val validityDate = LocalDate(2025, 1, 1)
         val isExpired = checkIfExpired(validityDate)
 
         assertTrue(isExpired)
@@ -34,8 +35,8 @@ class GoodExpirationLogicTest {
 
     @Test
     fun `should calculate remaining days correctly`() {
-        val today = LocalDate.now()
-        val validityDate = today.plusDays(5)
+        val today = LocalDate(2025, 1, 1)
+        val validityDate = LocalDate(2025, 1, 6)
 
         val remainingDays = calculateRemainingDays(today, validityDate)
 
@@ -43,11 +44,9 @@ class GoodExpirationLogicTest {
     }
 
     @Test
-    fun `should calculate remaining days as zero for expired goods`() {
-        val today = LocalDate.now()
-        val validityDate = today.minusDays(10)
-
-        val remainingDays = calculateRemainingDays(today, validityDate)
+    fun `should calculate remaining days as negative for expired goods`() {
+        // use earlier date to produce negative
+        val remainingDays = calculateRemainingDays(LocalDate(2025, 1, 1), LocalDate(2024, 12, 22))
 
         assertEquals(-10, remainingDays)
     }
@@ -73,11 +72,12 @@ class GoodExpirationLogicTest {
 
     // Helper functions for business logic
     private fun checkIfExpired(validityDate: LocalDate): Boolean {
-        return validityDate.isBefore(LocalDate.now()) || validityDate.isEqual(LocalDate.now())
+        val today = LocalDate(2025, 1, 1)
+        return validityDate < today || validityDate == today
     }
 
     private fun calculateRemainingDays(today: LocalDate, validityDate: LocalDate): Long {
-        return java.time.temporal.ChronoUnit.DAYS.between(today, validityDate)
+        return java.time.temporal.ChronoUnit.DAYS.between(today.toJava(), validityDate.toJava())
     }
 
     private fun shouldCreateAlert(remainingDays: Long): Boolean {

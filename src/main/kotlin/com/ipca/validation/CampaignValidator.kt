@@ -3,7 +3,7 @@ package com.ipca.validation
 import com.ipca.dto.Campaign.CampaignCreateDTO
 import com.ipca.dto.Campaign.CampaignUpdateDTO
 import com.ipca.exceptions.ValidationException
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 object CampaignValidator {
     
@@ -55,7 +55,7 @@ object CampaignValidator {
     }
     
     private fun validateDateRange(dateStart: LocalDate, dateEnd: LocalDate) {
-        if (dateStart.isAfter(dateEnd)) {
+        if (dateStart > dateEnd) {
             throw ValidationException(
                 "Campaign start date must be before or equal to end date",
                 "campaign"
