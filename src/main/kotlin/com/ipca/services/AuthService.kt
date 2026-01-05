@@ -35,7 +35,9 @@ object AuthService {
                 .singleOrNull()
                 ?: throw AuthenticationException("Invalid email or password")
 
-            if (!PasswordUtils.verify(password, collaborator[CollaboratorTable.password])) {
+            val storedHash = collaborator[CollaboratorTable.password]
+            
+            if (!PasswordUtils.verify(password, storedHash)) {
                 throw AuthenticationException("Invalid email or password")
             }
 
