@@ -68,7 +68,8 @@ object DatabaseFactory {
                 DeliveryItemTable,
                 CampaignTable,
                 NewsTable,
-                SessionTable
+                SessionTable,
+                MessageTable
             )
             
             println("📝 [DatabaseFactory] Tabelas a criar: ${allTables.map { it.tableName }}")
