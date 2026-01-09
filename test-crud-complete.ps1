@@ -88,12 +88,13 @@ $getEndpoints = @(
     "/expiration-alerts",
     "/news",
     "/activity-logs",
-    "/entities"
+    "/entities",
+    "/messages"
 )
 
 $getCount = 1
 foreach ($endpoint in $getEndpoints) {
-    Write-Host "  [$getCount/11] GET $endpoint..." -NoNewline
+    Write-Host "  [$getCount/12] GET $endpoint..." -NoNewline
     try {
         $response = Invoke-RestMethod -Uri "$baseUrl$endpoint" -Method GET `
             -Headers $headers -ErrorAction Stop
@@ -319,7 +320,7 @@ try {
 }
 
 # POST /activity-logs
-Write-Host " [11/11] POST /activity-logs..." -NoNewline
+Write-Host " [11/12] POST /activity-logs..." -NoNewline
 try {
     if ($createdIds['collaborator'] -and $createdIds['entity']) {
         $body = @{
@@ -339,6 +340,28 @@ try {
 } catch {
     Write-Host " X ERRO: $($_.Exception.Message)" -ForegroundColor Red
     $errors += "POST /activity-logs: $($_.Exception.Message)"
+    $failedPost++
+}
+
+# POST /messages (público - sem headers de autenticação)
+Write-Host " [12/12] POST /messages..." -NoNewline
+try {
+    $publicHeaders = @{
+        "Content-Type" = "application/json"
+    }
+    $body = @{
+        name = "Teste CRUD"
+        email = "teste@example.com"
+        category = "SUGESTAO"
+        message = "Esta e uma mensagem de teste do CRUD"
+    } | ConvertTo-Json
+    $response = Invoke-RestMethod -Uri "$baseUrl/messages" -Method POST -Headers $publicHeaders -Body $body -ErrorAction Stop
+    Write-Host " V OK" -ForegroundColor Green
+    $successPost++
+    if ($response.id) { $createdIds['message'] = $response.id }
+} catch {
+    Write-Host " X ERRO: $($_.Exception.Message)" -ForegroundColor Red
+    $errors += "POST /messages: $($_.Exception.Message)"
     $failedPost++
 }
 
@@ -547,6 +570,7 @@ Write-Host ""
 
 # DELETE na ordem inversa das dependencias
 $deleteOrder = @(
+    @{ name = "message"; endpoint = "messages"; id = $createdIds['message'] }
     @{ name = "activityLog"; endpoint = "activity-logs"; id = $createdIds['activityLog'] }
     @{ name = "alert"; endpoint = "expiration-alerts"; id = $createdIds['alert'] }
     @{ name = "delivery"; endpoint = "deliveries"; id = $createdIds['delivery'] }
@@ -562,7 +586,7 @@ $deleteOrder = @(
 
 $deleteCount = 1
 foreach ($item in $deleteOrder) {
-    Write-Host "  [$deleteCount/11] DELETE /$($item.endpoint)/{id}..." -NoNewline
+    Write-Host "  [$deleteCount/12] DELETE /$($item.endpoint)/{id}..." -NoNewline
     try {
         if ($item.id) {
             # Tratamento especial para courses - pode ter beneficiarios dependentes

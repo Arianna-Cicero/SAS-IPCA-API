@@ -13,7 +13,11 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.request.*
 import com.ipca.routes.*
+import com.ipca.dto.Message.MessageCreateDTO
+import com.ipca.dto.common.CreateResponseDTO
+import com.ipca.services.MessageService
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
@@ -22,6 +26,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.plugins.openapi.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.http.*
+import io.ktor.server.plugins.cors.routing.*
 
 
 
@@ -33,6 +38,34 @@ fun main() {
 fun Application.module() {
     // Install error handling first
     configureErrorHandling()
+    
+    // Configure CORS for web/mobile apps
+    install(CORS) {
+        // Modo desenvolvimento - permite qualquer origem
+        anyHost()
+        
+        // Headers permitidos
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
+        allowHeader("X-Requested-With")
+        allowHeader(HttpHeaders.Accept)
+        
+        // Métodos HTTP permitidos
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Patch)
+        
+        // Permitir credenciais (cookies, authorization headers)
+        allowCredentials = true
+        
+        // Cache da resposta preflight por 1 hora
+        maxAgeInSeconds = 3600
+    }
     
     install(ContentNegotiation) {
         json()
@@ -66,6 +99,25 @@ fun Application.module() {
 
         authRoutes()
 
+        // Rota pública para criar mensagens (POST sem autenticação)
+        post("/messages") {
+            try {
+                val request = call.receive<MessageCreateDTO>()
+                val id = MessageService.addMessage(
+                    name = request.name,
+                    email = request.email,
+                    category = request.category,
+                    message = request.message
+                )
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Message created successfully", id.toString()))
+            } catch (e: Exception) {
+                call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
+            }
+        }
+
+        // Rotas de goods públicas (sem autenticação)
+        goodRoutes()
+
         authenticate("auth-bearer") {
             courseRoutes()
             beneficiaryRoutes()
@@ -73,12 +125,12 @@ fun Application.module() {
             deliveryRoutes()
             deliveryItemRoutes()
             donationRoutes()
-            goodRoutes()
             expirationAlertRoutes()
             schedulingRoutes()
             newsRoutes()
             activityLogRoutes()
             entityRoutes()
+            messageRoutes() // GET, GET/{id}, DELETE protegidos
         }
     }
 }
