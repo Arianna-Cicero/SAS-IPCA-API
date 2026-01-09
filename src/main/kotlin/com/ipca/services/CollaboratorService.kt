@@ -15,7 +15,7 @@ object CollaboratorService {
     fun getAll(): List<CollaboratorResponseDTO> = transaction {
         CollaboratorTable.selectAll().map { row ->
             CollaboratorResponseDTO(
-                id = row[CollaboratorTable.id_collaborator],
+                id = row[CollaboratorTable.id_collaborator].toString(),
                 name = row[CollaboratorTable.name],
                 email = row[CollaboratorTable.email],
                 profile = row[CollaboratorTable.profile],
@@ -32,7 +32,7 @@ object CollaboratorService {
                 .singleOrNull()
                 ?.let { row ->
                     CollaboratorResponseDTO(
-                        id = row[CollaboratorTable.id_collaborator],
+                        id = row[CollaboratorTable.id_collaborator].toString(),
                         name = row[CollaboratorTable.name],
                         email = row[CollaboratorTable.email],
                         profile = row[CollaboratorTable.profile],

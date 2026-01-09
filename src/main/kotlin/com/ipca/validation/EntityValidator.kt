@@ -2,7 +2,6 @@ package com.ipca.validation
 
 import com.ipca.dto.Entity.EntityCreateDTO
 import com.ipca.exceptions.ValidationException
-import java.time.LocalDate
 
 object EntityValidator {
     

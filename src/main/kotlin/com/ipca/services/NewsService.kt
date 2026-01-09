@@ -9,6 +9,8 @@ import com.ipca.models.CampaignTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.toJava
 
 object NewsService {
 
@@ -33,7 +35,7 @@ object NewsService {
                 id = row[NewsTable.id],
                 title = row[NewsTable.title],
                 content = row[NewsTable.content],
-                datePublication = row[NewsTable.datePublication],
+                datePublication = row[NewsTable.datePublication].toKotlinx(),
                 campaign = campaign
             )
         }
@@ -63,7 +65,7 @@ object NewsService {
                     id = row[NewsTable.id],
                     title = row[NewsTable.title],
                     content = row[NewsTable.content],
-                    datePublication = row[NewsTable.datePublication],
+                    datePublication = row[NewsTable.datePublication].toKotlinx(),
                     campaign = campaign
                 )
             }
@@ -73,7 +75,7 @@ object NewsService {
         val insert = NewsTable.insert { row ->
             row[title] = request.title
             row[content] = request.content
-            row[datePublication] = request.datePublication
+            row[datePublication] = request.datePublication.toJava()
             request.campaignId?.let { cid -> row[idCampaign] = cid }
         }
         insert.resultedValues?.first()?.get(NewsTable.id)
@@ -84,7 +86,7 @@ object NewsService {
         NewsTable.update({ NewsTable.id eq id }) { row ->
             request.title?.let { row[NewsTable.title] = it }
             request.content?.let { row[NewsTable.content] = it }
-            request.datePublication?.let { row[NewsTable.datePublication] = it }
+            request.datePublication?.let { row[NewsTable.datePublication] = it.toJava() }
             request.campaignId?.let { row[NewsTable.idCampaign] = it }
         }
     }
@@ -111,7 +113,7 @@ object NewsService {
                     id = row[NewsTable.id],
                     title = row[NewsTable.title],
                     content = row[NewsTable.content],
-                    datePublication = row[NewsTable.datePublication],
+                    datePublication = row[NewsTable.datePublication].toKotlinx(),
                     campaign = campaign
                 )
             }

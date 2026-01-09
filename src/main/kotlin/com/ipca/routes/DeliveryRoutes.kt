@@ -1,5 +1,6 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.Delivery.DeliveryCreateDTO
 import com.ipca.dto.Delivery.DeliveryUpdateStatusDTO
 import com.ipca.services.DeliveryService
@@ -26,7 +27,7 @@ fun Route.deliveryRoutes() {
             try {
                 val request = call.receive<DeliveryCreateDTO>()
                 val id = DeliveryService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Delivery created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Delivery created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

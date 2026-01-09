@@ -3,7 +3,8 @@ package com.ipca.validation
 import com.ipca.dto.Good.GoodCreateDTO
 import com.ipca.dto.Good.GoodUpdateDTO
 import com.ipca.exceptions.ValidationException
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import com.ipca.utils.todayKotlinx
 
 object GoodValidator {
     
@@ -55,19 +56,19 @@ object GoodValidator {
     }
     
     private fun validateIntakeDate(intakeDate: LocalDate) {
-        if (intakeDate.isAfter(LocalDate.now())) {
+        if (intakeDate > todayKotlinx()) {
             throw ValidationException("Intake date cannot be in the future", "good")
         }
     }
     
     private fun validateValidityDate(validityDate: LocalDate) {
-        if (validityDate.isBefore(LocalDate.now())) {
+        if (validityDate < todayKotlinx()) {
             throw ValidationException("Validity date must be in the future or today", "good")
         }
     }
     
     private fun validateDateRange(intakeDate: LocalDate, validityDate: LocalDate) {
-        if (intakeDate.isAfter(validityDate)) {
+        if (intakeDate > validityDate) {
             throw ValidationException(
                 "Intake date must be before or equal to validity date",
                 "good"

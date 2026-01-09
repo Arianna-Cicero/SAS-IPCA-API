@@ -9,23 +9,25 @@ import com.ipca.exceptions.EntityNotFoundException
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import com.ipca.utils.todayKotlinx
+import java.util.UUID
 
 object SchedulingValidator {
     
     fun validateCreate(dto: SchedulingCreateDTO) {
         validateDeliveryDate(dto.dateDelivery)
         validateBeneficiaryExists(dto.beneficiaryId)
-        validateCollaboratorExists(dto.collaboratorId.toString())
+        validateCollaboratorExists(dto.collaboratorId)
     }
     
     fun validateUpdate(dto: SchedulingUpdateDTO) {
-        if (dto.dateDelivery != null) validateDeliveryDate(dto.dateDelivery)
-        if (dto.collaboratorId != null) validateCollaboratorExists(dto.collaboratorId.toString())
+        dto.dateDelivery?.let { validateDeliveryDate(it) }
+        dto.collaboratorId?.let { validateCollaboratorExists(it) }
     }
     
     private fun validateDeliveryDate(deliveryDate: LocalDate) {
-        if (deliveryDate.isBefore(LocalDate.now())) {
+        if (deliveryDate < todayKotlinx()) {
             throw ValidationException("Delivery date cannot be in the past", "scheduling")
         }
     }
@@ -40,18 +42,20 @@ object SchedulingValidator {
         }
     }
     
+    // Accept the collaborator id as a String (from DTO) and parse it here.
     private fun validateCollaboratorExists(collaboratorId: String) {
-        try {
-            val uuid = java.util.UUID.fromString(collaboratorId)
-            val exists = transaction {
-                CollaboratorTable.select { CollaboratorTable.id_collaborator eq uuid }.count() > 0
-            }
-            
-            if (!exists) {
-                throw EntityNotFoundException("collaborator", collaboratorId)
-            }
+        val uuid = try {
+            UUID.fromString(collaboratorId)
         } catch (e: IllegalArgumentException) {
-            throw ValidationException("Invalid collaborator UUID format", "scheduling")
+            throw ValidationException("Invalid collaboratorId UUID", "collaboratorId")
+        }
+
+        val exists = transaction {
+            CollaboratorTable.select { CollaboratorTable.id_collaborator eq uuid }.count() > 0
+        }
+
+        if (!exists) {
+            throw ValidationException("Collaborator not found", "scheduling")
         }
     }
 }

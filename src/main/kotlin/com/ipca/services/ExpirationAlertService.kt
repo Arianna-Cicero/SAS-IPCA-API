@@ -7,6 +7,9 @@ import com.ipca.models.GoodTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.todayKotlinx
+import com.ipca.utils.toJava
 
 object ExpirationAlertService {
 
@@ -22,8 +25,8 @@ object ExpirationAlertService {
                 goodId = goodId,
                 goodName = good?.get(GoodTable.name) ?: "",
                 category = good?.get(GoodTable.category) ?: "",
-                dateValidity = good?.get(GoodTable.dateValidity) ?: java.time.LocalDate.now(),
-                dateAlert = row[ExpirationAlertTable.dateAlert],
+                dateValidity = good?.get(GoodTable.dateValidity)?.toKotlinx() ?: todayKotlinx(),
+                dateAlert = row[ExpirationAlertTable.dateAlert].toKotlinx(),
                 remainingDays = row[ExpirationAlertTable.remainingDays],
                 resolved = row[ExpirationAlertTable.resolved]
             )
@@ -45,8 +48,8 @@ object ExpirationAlertService {
                     goodId = goodId,
                     goodName = good?.get(GoodTable.name) ?: "",
                     category = good?.get(GoodTable.category) ?: "",
-                    dateValidity = good?.get(GoodTable.dateValidity) ?: java.time.LocalDate.now(),
-                    dateAlert = row[ExpirationAlertTable.dateAlert],
+                    dateValidity = good?.get(GoodTable.dateValidity)?.toKotlinx() ?: todayKotlinx(),
+                    dateAlert = row[ExpirationAlertTable.dateAlert].toKotlinx(),
                     remainingDays = row[ExpirationAlertTable.remainingDays],
                     resolved = row[ExpirationAlertTable.resolved]
                 )
@@ -56,7 +59,7 @@ object ExpirationAlertService {
     fun create(request: ExpirationAlertCreateDTO): Int = transaction {
         val insert = ExpirationAlertTable.insert { row ->
             row[idGood] = request.goodId
-            row[dateAlert] = request.dateAlert
+            row[dateAlert] = request.dateAlert.toJava()
             row[remainingDays] = request.remainingDays
             row[resolved] = false
         }
@@ -88,8 +91,8 @@ object ExpirationAlertService {
                     goodId = goodId,
                     goodName = good?.get(GoodTable.name) ?: "",
                     category = good?.get(GoodTable.category) ?: "",
-                    dateValidity = good?.get(GoodTable.dateValidity) ?: java.time.LocalDate.now(),
-                    dateAlert = row[ExpirationAlertTable.dateAlert],
+                    dateValidity = good?.get(GoodTable.dateValidity)?.toKotlinx() ?: todayKotlinx(),
+                    dateAlert = row[ExpirationAlertTable.dateAlert].toKotlinx(),
                     remainingDays = row[ExpirationAlertTable.remainingDays],
                     resolved = row[ExpirationAlertTable.resolved]
                 )

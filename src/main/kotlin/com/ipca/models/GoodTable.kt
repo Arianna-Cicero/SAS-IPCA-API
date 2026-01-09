@@ -9,7 +9,7 @@ object GoodTable : Table("Good") {
     val name = varchar("name", 100)
     val category = varchar("category", 100)
     val quantity = integer("quantity").check { it greaterEq 0 }
-    val intake = date("intake")
+    val intake = date("intake_date")
     val dateValidity = date("date_validity")
     val status = varchar("status", 120)
     val idDonation = uuid("id_donation").references(

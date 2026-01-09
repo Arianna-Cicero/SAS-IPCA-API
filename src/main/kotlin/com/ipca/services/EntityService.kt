@@ -49,4 +49,8 @@ object EntityService {
                 )
             }
     }
+
+    fun delete(id: Int) = transaction {
+        EntityTable.deleteWhere { EntityTable.id eq id }
+    }
 }

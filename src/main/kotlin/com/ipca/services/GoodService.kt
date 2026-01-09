@@ -9,6 +9,9 @@ import com.ipca.models.DonationTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import com.ipca.utils.todayKotlinx
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.toJava
 
 object GoodService {
 
@@ -23,7 +26,7 @@ object GoodService {
                         id = donRow[DonationTable.id].toString(),
                         nameDonor = donRow[DonationTable.nameDonor],
                         type = donRow[DonationTable.type],
-                        dateDonor = donRow[DonationTable.dateDonor],
+                        dateDonor = donRow[DonationTable.dateDonor].toKotlinx(),
                         description = donRow[DonationTable.description]
                     )
                 }
@@ -33,10 +36,10 @@ object GoodService {
                 name = row[GoodTable.name],
                 category = row[GoodTable.category],
                 quantity = row[GoodTable.quantity],
-                intake = row[GoodTable.intake],
-                dateValidity = row[GoodTable.dateValidity],
+                intake = row[GoodTable.intake].toKotlinx(),
+                dateValidity = row[GoodTable.dateValidity].toKotlinx(),
                 status = row[GoodTable.status],
-                donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
+                donation = donation ?: DonationResponseDTO("", "", "", todayKotlinx(), null)
             )
         }
     }
@@ -55,7 +58,7 @@ object GoodService {
                             id = donRow[DonationTable.id].toString(),
                             nameDonor = donRow[DonationTable.nameDonor],
                             type = donRow[DonationTable.type],
-                            dateDonor = donRow[DonationTable.dateDonor],
+                            dateDonor = donRow[DonationTable.dateDonor].toKotlinx(),
                             description = donRow[DonationTable.description]
                         )
                     }
@@ -65,10 +68,10 @@ object GoodService {
                     name = row[GoodTable.name],
                     category = row[GoodTable.category],
                     quantity = row[GoodTable.quantity],
-                    intake = row[GoodTable.intake],
-                    dateValidity = row[GoodTable.dateValidity],
+                    intake = row[GoodTable.intake].toKotlinx(),
+                    dateValidity = row[GoodTable.dateValidity].toKotlinx(),
                     status = row[GoodTable.status],
-                    donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
+                    donation = donation ?: DonationResponseDTO("", "", "", todayKotlinx(), null)
                 )
             }
     }
@@ -78,8 +81,8 @@ object GoodService {
             row[name] = request.name
             row[category] = request.category
             row[quantity] = request.quantity
-            row[intake] = request.intake
-            row[dateValidity] = request.dateValidity
+            row[intake] = request.intake.toJava()
+            row[dateValidity] = request.dateValidity.toJava()
             row[status] = "available"
             row[idDonation] = try {
                 java.util.UUID.fromString(request.donationId)
@@ -96,7 +99,7 @@ object GoodService {
             request.name?.let { row[GoodTable.name] = it }
             request.category?.let { row[GoodTable.category] = it }
             request.quantity?.let { row[GoodTable.quantity] = it }
-            request.dateValidity?.let { row[GoodTable.dateValidity] = it }
+            request.dateValidity?.let { row[GoodTable.dateValidity] = it.toJava() }
             request.status?.let { row[GoodTable.status] = it }
         }
     }
@@ -118,7 +121,7 @@ object GoodService {
                             id = donRow[DonationTable.id].toString(),
                             nameDonor = donRow[DonationTable.nameDonor],
                             type = donRow[DonationTable.type],
-                            dateDonor = donRow[DonationTable.dateDonor],
+                            dateDonor = donRow[DonationTable.dateDonor].toKotlinx(),
                             description = donRow[DonationTable.description]
                         )
                     }
@@ -128,10 +131,10 @@ object GoodService {
                     name = row[GoodTable.name],
                     category = row[GoodTable.category],
                     quantity = row[GoodTable.quantity],
-                    intake = row[GoodTable.intake],
-                    dateValidity = row[GoodTable.dateValidity],
+                    intake = row[GoodTable.intake].toKotlinx(),
+                    dateValidity = row[GoodTable.dateValidity].toKotlinx(),
                     status = row[GoodTable.status],
-                    donation = donation ?: DonationResponseDTO("", "", "", java.time.LocalDate.now(), null)
+                    donation = donation ?: DonationResponseDTO("", "", "", todayKotlinx(), null)
                 )
             }
     }

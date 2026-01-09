@@ -1,7 +1,7 @@
 package com.ipca.auth
 
-import java.util.UUID
+import io.ktor.server.auth.Principal
 
 data class CollaboratorPrincipal(
-    val id: UUID
-)
+    val id: String
+) : Principal

@@ -2,7 +2,7 @@ package com.ipca.dto.News
 
 import com.ipca.dto.Campaign.CampaignSummaryDTO
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Serializable
 data class NewsResponseDTO(

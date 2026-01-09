@@ -1,6 +1,6 @@
 package com.ipca.dto.News
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Serializable
 data class NewsCreateDTO(

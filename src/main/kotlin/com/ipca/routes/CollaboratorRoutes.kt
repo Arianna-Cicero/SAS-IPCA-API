@@ -1,5 +1,6 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.Collaborator.CollaboratorCreateDTO
 import com.ipca.dto.Collaborator.CollaboratorUpdateDTO
 import com.ipca.services.CollaboratorService
@@ -26,7 +27,7 @@ fun Route.collaboratorRoutes() {
             try {
                 val request = call.receive<CollaboratorCreateDTO>()
                 val id = CollaboratorService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Collaborator created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Collaborator created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

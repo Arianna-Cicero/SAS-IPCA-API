@@ -11,6 +11,8 @@ import com.ipca.models.CollaboratorTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import com.ipca.utils.toKotlinx
+import com.ipca.utils.toJava
 
 object SchedulingService {
 
@@ -35,7 +37,7 @@ object SchedulingService {
                 .singleOrNull()
                 ?.let { colRow ->
                     CollaboratorSummaryDTO(
-                        id = colRow[CollaboratorTable.id_collaborator],
+                        id = colRow[CollaboratorTable.id_collaborator].toString(),
                         name = colRow[CollaboratorTable.name],
                         email = colRow[CollaboratorTable.email]
                     )
@@ -43,10 +45,10 @@ object SchedulingService {
 
             SchedulingResponseDTO(
                 id = row[SchedulingTable.id],
-                dateDelivery = row[SchedulingTable.dateDelivery],
+                dateDelivery = row[SchedulingTable.dateDelivery].toKotlinx(),
                 status = row[SchedulingTable.status] ?: "pending",
                 beneficiary = beneficiary ?: BeneficiarySummaryDTO(0, "", 0),
-                collaborator = collaborator ?: CollaboratorSummaryDTO(java.util.UUID.randomUUID(), "", "")
+                collaborator = collaborator ?: CollaboratorSummaryDTO(java.util.UUID.randomUUID().toString(), "", "")
             )
         }
     }
@@ -75,7 +77,7 @@ object SchedulingService {
                     .singleOrNull()
                     ?.let { colRow ->
                         CollaboratorSummaryDTO(
-                            id = colRow[CollaboratorTable.id_collaborator],
+                            id = colRow[CollaboratorTable.id_collaborator].toString(),
                             name = colRow[CollaboratorTable.name],
                             email = colRow[CollaboratorTable.email]
                         )
@@ -83,10 +85,10 @@ object SchedulingService {
 
                 SchedulingResponseDTO(
                     id = row[SchedulingTable.id],
-                    dateDelivery = row[SchedulingTable.dateDelivery],
+                    dateDelivery = row[SchedulingTable.dateDelivery].toKotlinx(),
                     status = row[SchedulingTable.status] ?: "pending",
                     beneficiary = beneficiary ?: BeneficiarySummaryDTO(0, "", 0),
-                    collaborator = collaborator ?: CollaboratorSummaryDTO(java.util.UUID.randomUUID(), "", "")
+                    collaborator = collaborator ?: CollaboratorSummaryDTO(java.util.UUID.randomUUID().toString(), "", "")
                 )
             }
     }
@@ -94,8 +96,8 @@ object SchedulingService {
     fun create(request: SchedulingCreateDTO): Int = transaction {
         val insert = SchedulingTable.insert { row ->
             row[idBeneficiary] = request.beneficiaryId
-            row[idCollaborator] = request.collaboratorId
-            row[dateDelivery] = request.dateDelivery
+            row[idCollaborator] = java.util.UUID.fromString(request.collaboratorId)
+            row[dateDelivery] = request.dateDelivery.toJava()
             row[status] = "pending"
         }
         insert.resultedValues?.first()?.get(SchedulingTable.id)
@@ -104,9 +106,9 @@ object SchedulingService {
 
     fun update(id: Int, request: SchedulingUpdateDTO) = transaction {
         SchedulingTable.update({ SchedulingTable.id eq id }) { row ->
-            request.dateDelivery?.let { row[SchedulingTable.dateDelivery] = it }
-            request.collaboratorId?.let { row[SchedulingTable.idCollaborator] = it }
-            request.status?.let { row[SchedulingTable.status] = it }
+            request.dateDelivery?.let { d -> row[SchedulingTable.dateDelivery] = d.toJava() }
+            request.collaboratorId?.let { c -> row[SchedulingTable.idCollaborator] = java.util.UUID.fromString(c) }
+            request.status?.let { s -> row[SchedulingTable.status] = s }
         }
     }
 

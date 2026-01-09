@@ -1,6 +1,7 @@
 package com.ipca.routes
 
 import com.ipca.dto.ActivityLog.ActivityLogCreateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.ActivityLogService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -25,7 +26,7 @@ fun Route.activityLogRoutes() {
             try {
                 val request = call.receive<ActivityLogCreateDTO>()
                 val id = ActivityLogService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Activity log created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Activity log created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
@@ -67,6 +68,19 @@ fun Route.activityLogRoutes() {
 
                 val logs = ActivityLogService.getByEntityId(entityId)
                 call.respond(logs)
+            } catch (e: Exception) {
+                call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
+            }
+        }
+
+        // DELETE /activity-logs/{id} → delete activity log
+        delete("{id}") {
+            try {
+                val id = call.parameters["id"]?.toIntOrNull()
+                    ?: return@delete call.respondText("Invalid ID", status = HttpStatusCode.BadRequest)
+
+                ActivityLogService.delete(id)
+                call.respond(HttpStatusCode.OK, mapOf("message" to "Activity log deleted successfully"))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }

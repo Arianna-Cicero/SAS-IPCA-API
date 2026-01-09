@@ -38,8 +38,6 @@ object DatabaseFactory {
             try {
                 println("▶️ Tentativa de conexão: $url com utilizador '$user'")
                 Database.connect(url = url, driver = "org.postgresql.Driver", user = user, password = pass)
-                // Touch the connection in a small transaction to validate
-                transaction { SchemaUtils.createMissingTablesAndColumns(CourseTable) }
                 println("✅ Ligado ao PostgreSQL com sucesso!")
                 connected = true
                 break
@@ -56,8 +54,9 @@ object DatabaseFactory {
         }
 
         // Create full schema once connected
+        println("📋 [DatabaseFactory] A criar tabelas na base de dados...")
         transaction {
-            SchemaUtils.create(
+            val allTables = listOf(
                 CourseTable,
                 CollaboratorTable,
                 BeneficiaryTable,
@@ -68,8 +67,16 @@ object DatabaseFactory {
                 ExpirationAlertTable,
                 DeliveryItemTable,
                 CampaignTable,
-                NewsTable
+                NewsTable,
+                SessionTable
             )
+            
+            println("📝 [DatabaseFactory] Tabelas a criar: ${allTables.map { it.tableName }}")
+            
+            // Create all tables - existing tables are ignored
+            SchemaUtils.create(*allTables.toTypedArray())
+            
+            println("✅ [DatabaseFactory] Todas as tabelas foram criadas/verificadas com sucesso!")
         }
     }
 }

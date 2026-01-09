@@ -81,3 +81,13 @@ class InvalidStatusTransitionException(
  * Thrown when a session is invalid or expired
  */
 class InvalidSessionException(message: String, cause: Throwable? = null) : ApplicationException(message, cause)
+
+/**
+ * Thrown when authentication fails (invalid credentials, expired token, etc.)
+ */
+class AuthenticationException(message: String, cause: Throwable? = null) : ApplicationException(message, cause)
+
+/**
+ * Thrown when user doesn't have permission to perform an action
+ */
+class AuthorizationException(message: String, cause: Throwable? = null) : ApplicationException(message, cause)

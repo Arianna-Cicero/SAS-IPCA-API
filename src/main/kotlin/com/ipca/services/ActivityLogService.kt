@@ -20,12 +20,12 @@ object ActivityLogService {
 
             ActivityLogResponseDTO(
                 id = row[ActivityLogTable.id],
-                collaboratorId = row[ActivityLogTable.collaboratorId],
+                collaboratorId = row[ActivityLogTable.collaboratorId].toString(),
                 entityId = entityId,
                 entityName = entity?.get(EntityTable.name) ?: "",
                 recordId = row[ActivityLogTable.recordId],
                 action = row[ActivityLogTable.action],
-                timestamp = row[ActivityLogTable.timestamp]
+                timestamp = row[ActivityLogTable.timestamp].toString()
             )
         }
     }
@@ -42,19 +42,19 @@ object ActivityLogService {
 
                 ActivityLogResponseDTO(
                     id = row[ActivityLogTable.id],
-                    collaboratorId = row[ActivityLogTable.collaboratorId],
+                    collaboratorId = row[ActivityLogTable.collaboratorId].toString(),
                     entityId = entityId,
                     entityName = entity?.get(EntityTable.name) ?: "",
                     recordId = row[ActivityLogTable.recordId],
                     action = row[ActivityLogTable.action],
-                    timestamp = row[ActivityLogTable.timestamp]
+                    timestamp = row[ActivityLogTable.timestamp].toString()
                 )
             }
     }
 
     fun create(request: ActivityLogCreateDTO): Int = transaction {
         val insert = ActivityLogTable.insert { row ->
-            row[collaboratorId] = request.collaboratorId
+            row[collaboratorId] = UUID.fromString(request.collaboratorId)
             row[entityId] = request.entityId
             row[recordId] = request.recordId
             row[action] = request.action
@@ -76,12 +76,12 @@ object ActivityLogService {
 
                     ActivityLogResponseDTO(
                         id = row[ActivityLogTable.id],
-                        collaboratorId = row[ActivityLogTable.collaboratorId],
+                        collaboratorId = row[ActivityLogTable.collaboratorId].toString(),
                         entityId = entityId,
                         entityName = entity?.get(EntityTable.name) ?: "",
                         recordId = row[ActivityLogTable.recordId],
                         action = row[ActivityLogTable.action],
-                        timestamp = row[ActivityLogTable.timestamp]
+                        timestamp = row[ActivityLogTable.timestamp].toString()
                     )
                 }
         } catch (e: Exception) {
@@ -99,13 +99,17 @@ object ActivityLogService {
 
                 ActivityLogResponseDTO(
                     id = row[ActivityLogTable.id],
-                    collaboratorId = row[ActivityLogTable.collaboratorId],
+                    collaboratorId = row[ActivityLogTable.collaboratorId].toString(),
                     entityId = entityId,
                     entityName = entity?.get(EntityTable.name) ?: "",
                     recordId = row[ActivityLogTable.recordId],
                     action = row[ActivityLogTable.action],
-                    timestamp = row[ActivityLogTable.timestamp]
+                    timestamp = row[ActivityLogTable.timestamp].toString()
                 )
             }
+    }
+
+    fun delete(id: Int): Int = transaction {
+        ActivityLogTable.deleteWhere { ActivityLogTable.id eq id }
     }
 }

@@ -6,6 +6,7 @@ import com.ipca.models.BeneficiaryTable
 import com.ipca.models.SchedulingTable
 import com.ipca.models.DeliveryTable
 import com.ipca.models.DeliveryItemTable
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -40,13 +41,14 @@ object BeneficiaryService {
     }
 
     fun create(request: BeneficiaryCreateDTO): Int = transaction {
-        BeneficiaryTable.insertAndGetId { row ->
+        BeneficiaryTable.insert { row ->
             row[name] = request.name
             row[studentNumber] = request.studentNumber
             row[email] = request.email
             row[idCourse] = request.idCourse
             row[telephone] = request.telephone
-        }.value
+        }
+        request.studentNumber
     }
 
     fun update(id: Int, request: BeneficiaryUpdateDTO) = transaction {
@@ -62,20 +64,42 @@ object BeneficiaryService {
         BeneficiaryTable.deleteWhere { BeneficiaryTable.studentNumber eq id }
     }
 
-    fun getSchedulingForBeneficiary(beneficiaryId: Int): List<Map<String, Any?>> = transaction {
+    @Serializable
+    data class BeneficiarySchedulingDTO(
+        val id: Int,
+        val dateDelivery: String,
+        val status: String,
+        val idCollaborator: String
+    )
+
+    fun getSchedulingForBeneficiary(beneficiaryId: Int): List<BeneficiarySchedulingDTO> = transaction {
         SchedulingTable
             .select { SchedulingTable.idBeneficiary eq beneficiaryId }
             .map { row ->
-                mapOf(
-                    "id" to row[SchedulingTable.id],
-                    "dateDelivery" to row[SchedulingTable.dateDelivery],
-                    "status" to row[SchedulingTable.status],
-                    "idCollaborator" to row[SchedulingTable.idCollaborator]
+                BeneficiarySchedulingDTO(
+                    id = row[SchedulingTable.id],
+                    dateDelivery = row[SchedulingTable.dateDelivery].toString(),
+                    status = row[SchedulingTable.status] ?: "",
+                    idCollaborator = row[SchedulingTable.idCollaborator].toString()
                 )
             }
     }
 
-    fun getDeliveriesForBeneficiary(beneficiaryId: Int): List<Map<String, Any?>> = transaction {
+    @Serializable
+    data class DeliveryItemDTO(
+        val goodId: Int,
+        val quantity: Int
+    )
+
+    @Serializable
+    data class BeneficiaryDeliveryDTO(
+        val id: String,
+        val dateDelivery: String,
+        val status: String,
+        val items: List<DeliveryItemDTO>
+    )
+
+    fun getDeliveriesForBeneficiary(beneficiaryId: Int): List<BeneficiaryDeliveryDTO> = transaction {
         // first find all schedulings from this beneficiary
         val schedulings = SchedulingTable
             .select { SchedulingTable.idBeneficiary eq beneficiaryId }
@@ -91,17 +115,17 @@ object BeneficiaryService {
                 val items = DeliveryItemTable
                     .select { DeliveryItemTable.idDelivery eq deliveryId }
                     .map { itemRow ->
-                        mapOf(
-                            "goodId" to itemRow[DeliveryItemTable.idGood],
-                            "quantity" to itemRow[DeliveryItemTable.quantity]
+                        DeliveryItemDTO(
+                            goodId = itemRow[DeliveryItemTable.idGood],
+                            quantity = itemRow[DeliveryItemTable.quantity]
                         )
                     }
 
-                mapOf(
-                    "id" to deliveryId,
-                    "dateDelivery" to deliveryRow[DeliveryTable.dateDelivery],
-                    "status" to deliveryRow[DeliveryTable.status],
-                    "items" to items
+                BeneficiaryDeliveryDTO(
+                    id = deliveryId.toString(),
+                    dateDelivery = deliveryRow[DeliveryTable.dateDelivery].toString(),
+                    status = deliveryRow[DeliveryTable.status],
+                    items = items
                 )
             }
     }

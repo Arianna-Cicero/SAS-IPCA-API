@@ -2,6 +2,7 @@ package com.ipca.routes
 
 import com.ipca.dto.Course.CourseCreateDTO
 import com.ipca.dto.Course.CourseUpdateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.CourseService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -16,7 +17,7 @@ fun Route.courseRoutes() {
         get {
             try {
                 val courses = CourseService.getAllCourses()
-                call.respond(courses.map { mapOf("id" to it.first, "name" to it.second) })
+                call.respond(HttpStatusCode.OK, courses)
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }
@@ -26,8 +27,8 @@ fun Route.courseRoutes() {
         post {
             try {
                 val request = call.receive<CourseCreateDTO>()
-                CourseService.addCourse(request.name)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Course created successfully"))
+                val id = CourseService.addCourse(request.name)
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Course created successfully", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
@@ -42,7 +43,7 @@ fun Route.courseRoutes() {
                 val course = CourseService.getById(id)
                     ?: return@get call.respondText("Course not found", status = HttpStatusCode.NotFound)
 
-                call.respond(course)
+                call.respond(HttpStatusCode.OK, course)
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }

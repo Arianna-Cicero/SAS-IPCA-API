@@ -2,6 +2,7 @@ package com.ipca
 
 import com.ipca.auth.configureAuth
 import com.ipca.database.DatabaseFactory
+import com.ipca.exceptions.configureErrorHandling
 import com.ipca.logging.EntityType
 import com.ipca.models.EntityTable
 import com.ipca.routes.authRoutes
@@ -30,10 +31,12 @@ fun main() {
 }
 
 fun Application.module() {
+    // Install error handling first
+    configureErrorHandling()
+    
     install(ContentNegotiation) {
         json()
     }
-
 
     DatabaseFactory.init()
     configureAuth()
@@ -47,10 +50,6 @@ fun Application.module() {
             }
         }
     }
-
-
-
-
 
     routing {
         // Serve the static OpenAPI YAML from resources without http-content plugin
