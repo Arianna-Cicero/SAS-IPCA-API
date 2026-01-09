@@ -22,6 +22,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.plugins.openapi.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.http.*
+import io.ktor.server.plugins.cors.routing.*
 
 
 
@@ -33,6 +34,20 @@ fun main() {
 fun Application.module() {
     // Install error handling first
     configureErrorHandling()
+    
+    // Configure CORS for web/mobile apps
+    install(CORS) {
+        anyHost() // Para desenvolvimento - em produção especificar hosts permitidos
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Options)
+        allowCredentials = true
+        maxAgeInSeconds = 3600
+    }
     
     install(ContentNegotiation) {
         json()
