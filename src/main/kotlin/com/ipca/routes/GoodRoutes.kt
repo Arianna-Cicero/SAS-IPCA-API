@@ -2,6 +2,7 @@ package com.ipca.routes
 
 import com.ipca.dto.Good.GoodCreateDTO
 import com.ipca.dto.Good.GoodUpdateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.GoodService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -26,7 +27,7 @@ fun Route.goodRoutes() {
             try {
                 val request = call.receive<GoodCreateDTO>()
                 val id = GoodService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Good created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Good created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

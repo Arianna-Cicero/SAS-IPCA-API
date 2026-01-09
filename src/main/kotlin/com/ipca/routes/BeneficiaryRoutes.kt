@@ -2,6 +2,7 @@ package com.ipca.routes
 
 import com.ipca.dto.Beneficiary.BeneficiaryCreateDTO
 import com.ipca.dto.Beneficiary.BeneficiaryUpdateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.BeneficiaryService
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
@@ -38,7 +39,7 @@ fun Route.beneficiaryRoutes() {
             try {
                 val req = call.receive<BeneficiaryCreateDTO>()
                 val id = BeneficiaryService.create(req)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Beneficiary created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Beneficiary created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

@@ -1,6 +1,7 @@
 package com.ipca.routes
 
 import com.ipca.dto.Entity.EntityCreateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.EntityService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -25,7 +26,7 @@ fun Route.entityRoutes() {
             try {
                 val request = call.receive<EntityCreateDTO>()
                 val id = EntityService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Entity created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Entity created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
@@ -56,6 +57,19 @@ fun Route.entityRoutes() {
                     ?: return@get call.respondText("Entity not found", status = HttpStatusCode.NotFound)
 
                 call.respond(entity)
+            } catch (e: Exception) {
+                call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
+            }
+        }
+
+        // DELETE /entities/{id} → delete entity
+        delete("{id}") {
+            try {
+                val id = call.parameters["id"]?.toIntOrNull()
+                    ?: return@delete call.respondText("Invalid ID", status = HttpStatusCode.BadRequest)
+
+                EntityService.delete(id)
+                call.respond(HttpStatusCode.OK, mapOf("message" to "Entity deleted successfully"))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.InternalServerError)
             }

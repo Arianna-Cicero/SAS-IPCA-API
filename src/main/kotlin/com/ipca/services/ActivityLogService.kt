@@ -108,4 +108,8 @@ object ActivityLogService {
                 )
             }
     }
+
+    fun delete(id: Int): Int = transaction {
+        ActivityLogTable.deleteWhere { ActivityLogTable.id eq id }
+    }
 }

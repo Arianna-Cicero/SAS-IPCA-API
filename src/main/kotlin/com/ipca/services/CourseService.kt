@@ -1,31 +1,44 @@
 package com.ipca.services
 
+import com.ipca.dto.Course.CourseResponseDTO
 import com.ipca.models.CourseTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object CourseService {
-    fun getAllCourses(): List<Pair<Int, String>> {
+    fun getAllCourses(): List<CourseResponseDTO> {
         return transaction {
-            CourseTable.selectAll().map { it[CourseTable.id] to it[CourseTable.name] }
+            CourseTable.selectAll().map { 
+                CourseResponseDTO(
+                    id = it[CourseTable.id],
+                    name = it[CourseTable.name]
+                )
+            }
         }
     }
 
-    fun getById(id: Int): Pair<Int, String>? {
+    fun getById(id: Int): CourseResponseDTO? {
         return transaction {
             CourseTable
                 .select { CourseTable.id eq id }
                 .singleOrNull()
-                ?.let { it[CourseTable.id] to it[CourseTable.name] }
+                ?.let { 
+                    CourseResponseDTO(
+                        id = it[CourseTable.id],
+                        name = it[CourseTable.name]
+                    )
+                }
         }
     }
 
-    fun addCourse(name: String) {
-        transaction {
-            CourseTable.insert {
+    fun addCourse(name: String): Int {
+        return transaction {
+            val insert = CourseTable.insert {
                 it[CourseTable.name] = name
             }
+            insert.resultedValues?.first()?.get(CourseTable.id)
+                ?: error("Failed to insert Course")
         }
     }
 

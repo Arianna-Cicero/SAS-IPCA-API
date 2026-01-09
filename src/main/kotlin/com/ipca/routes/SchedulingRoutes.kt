@@ -1,12 +1,13 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.Schedulling.SchedulingCreateDTO
 import com.ipca.dto.Schedulling.SchedulingUpdateDTO
 import com.ipca.services.SchedulingService
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.schedulingRoutes() {
@@ -26,7 +27,7 @@ fun Route.schedulingRoutes() {
             try {
                 val request = call.receive<SchedulingCreateDTO>()
                 val id = SchedulingService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Scheduling created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Scheduling created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

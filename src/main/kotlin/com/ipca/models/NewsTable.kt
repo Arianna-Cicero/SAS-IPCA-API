@@ -16,6 +16,7 @@ object NewsTable : Table("News") {
                     onUpdate = ReferenceOption.CASCADE,
                     onDelete = ReferenceOption.SET_NULL
             )
+            .nullable()
 
     override val primaryKey = PrimaryKey(id, name = "PK_News_ID")
 }

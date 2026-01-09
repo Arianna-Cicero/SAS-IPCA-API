@@ -1,5 +1,6 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.ExpirationAlert.ExpirationAlertCreateDTO
 import com.ipca.dto.ExpirationAlert.ExpirationAlertResolveDTO
 import com.ipca.services.ExpirationAlertService
@@ -26,7 +27,7 @@ fun Route.expirationAlertRoutes() {
             try {
                 val request = call.receive<ExpirationAlertCreateDTO>()
                 val id = ExpirationAlertService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Alert created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Alert created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

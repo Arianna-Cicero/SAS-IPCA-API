@@ -3,7 +3,7 @@ package com.ipca.models
 import org.jetbrains.exposed.sql.Table
 
 
-object CourseTable : Table("Course") {
+object CourseTable : Table("course") {
     val id = integer("id_course").autoIncrement()
     val name = varchar("name", 100)
 

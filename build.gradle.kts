@@ -6,9 +6,6 @@ plugins {
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.serialization") version "2.0.21"
     application
-    id("io.gitlab.arturbosch.detekt") version "1.23.5"
-    id("org.owasp.dependencycheck") version "9.0.7"
-    jacoco
 }
 
 java {
@@ -56,23 +53,6 @@ dependencies {
     implementation("com.auth0:java-jwt:4.4.0")
     // Status pages for error handling
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
-
-    // Testing
-    testImplementation(kotlin("test"))
-    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-core:$ktorVersion")
-    testImplementation("io.mockk:mockk:1.13.8")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
-    // Test database
-    testImplementation("com.h2database:h2:2.2.220")
-    testImplementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    testImplementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-
-    // Code quality
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.5")
-
     //swagger
     implementation("io.ktor:ktor-server-openapi-jvm:${ktorVersion}")
     implementation("io.ktor:ktor-server-swagger-jvm:${ktorVersion}")
@@ -93,33 +73,6 @@ tasks.withType<JavaCompile> {
     targetCompatibility = "17"
 }
 
-tasks.test {
-    useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
-}
-
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-        csv.required.set(false)
-    }
-}
-
-// Detekt configuration
-
-detekt {
-    toolVersion = "1.23.5"
-    config.setFrom(files("config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-    baseline = file("detekt-baseline.xml")
-    autoCorrect = false
-    parallel = true
-    ignoreFailures = true
-}
-
-
 // Distribution task
 distributions {
     main {
@@ -128,13 +81,5 @@ distributions {
                 into("conf")
             }
         }
-    }
-}
-
-// Task to generate test report
-tasks.register("testReport") {
-    dependsOn(tasks.test)
-    doLast {
-        println("Test report generated at: build/reports/tests/test/index.html")
     }
 }

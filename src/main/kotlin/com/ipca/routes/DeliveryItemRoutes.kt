@@ -1,5 +1,6 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.DeliveryItem.DeliveryItemCreateDTO
 import com.ipca.services.DeliveryItemService
 import io.ktor.http.*
@@ -25,7 +26,7 @@ fun Route.deliveryItemRoutes() {
             try {
                 val request = call.receive<DeliveryItemCreateDTO>()
                 DeliveryItemService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Delivery item created"))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Delivery item created"))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

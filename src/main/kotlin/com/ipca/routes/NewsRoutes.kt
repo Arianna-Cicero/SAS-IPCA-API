@@ -2,6 +2,7 @@ package com.ipca.routes
 
 import com.ipca.dto.News.NewsCreateDTO
 import com.ipca.dto.News.NewsUpdateDTO
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.services.NewsService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -26,7 +27,7 @@ fun Route.newsRoutes() {
             try {
                 val request = call.receive<NewsCreateDTO>()
                 val id = NewsService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "News created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("News created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }

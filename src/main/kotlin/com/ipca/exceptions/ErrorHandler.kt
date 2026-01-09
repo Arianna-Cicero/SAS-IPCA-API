@@ -82,6 +82,33 @@ fun Application.configureErrorHandling() {
                 )
             )
         }
+        
+        // Handle BadRequestException from invalid auth headers
+        exception<io.ktor.server.plugins.BadRequestException> { call, cause ->
+            if (cause.message?.contains("auth header", ignoreCase = true) == true ||
+                cause.message?.contains("parseAuthorizationHeader", ignoreCase = true) == true) {
+                val authHeaders = call.request.headers.getAll("Authorization")
+                logger.warn("Invalid authorization header. Headers received: $authHeaders, Error: ${cause.message}")
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse(
+                        code = "INVALID_AUTH_HEADER",
+                        message = "Invalid or malformed Authorization header",
+                        details = "Please authenticate first using the 'Authorize' button with a valid token from /auth/login"
+                    )
+                )
+            } else {
+                logger.warn("Bad request: ${cause.message}")
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse(
+                        code = "BAD_REQUEST",
+                        message = cause.message ?: "Bad request",
+                        details = null
+                    )
+                )
+            }
+        }
 
         // Handle authorization errors
         exception<AuthorizationException> { call, cause ->

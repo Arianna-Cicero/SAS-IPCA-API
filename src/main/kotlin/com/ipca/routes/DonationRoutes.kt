@@ -1,5 +1,6 @@
 package com.ipca.routes
 
+import com.ipca.dto.common.CreateResponseDTO
 import com.ipca.dto.Donation.DonationCreateDTO
 import com.ipca.dto.Donation.DonationUpdateDTO
 import com.ipca.services.DonationService
@@ -26,7 +27,7 @@ fun Route.donationRoutes() {
             try {
                 val request = call.receive<DonationCreateDTO>()
                 val id = DonationService.create(request)
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Donation created", "id" to id))
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Donation created", id.toString()))
             } catch (e: Exception) {
                 call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
             }
