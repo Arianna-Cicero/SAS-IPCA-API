@@ -21,5 +21,45 @@ fun Application.module() {
         get("/") {
             call.respondText("Loja Social IPCA API is running")
         }
+<<<<<<< Updated upstream
+=======
+
+        authRoutes()
+
+        // Rota pública para criar mensagens (POST sem autenticação)
+        post("/messages") {
+            try {
+                val request = call.receive<MessageCreateDTO>()
+                val id = MessageService.addMessage(
+                    name = request.name,
+                    email = request.email,
+                    category = request.category,
+                    message = request.message
+                )
+                call.respond(HttpStatusCode.Created, CreateResponseDTO("Message created successfully", id.toString()))
+            } catch (e: Exception) {
+                call.respondText("Error: ${e.message}", status = HttpStatusCode.BadRequest)
+            }
+        }
+
+        // Rotas de goods públicas (sem autenticação)
+        goodRoutes()
+
+        authenticate("auth-bearer") {
+            dashboardRoutes()
+            courseRoutes()
+            beneficiaryRoutes()
+            collaboratorRoutes()
+            deliveryRoutes()
+            deliveryItemRoutes()
+            donationRoutes()
+            expirationAlertRoutes()
+            schedulingRoutes()
+            newsRoutes()
+            activityLogRoutes()
+            entityRoutes()
+            messageRoutes() // GET, GET/{id}, DELETE protegidos
+        }
+>>>>>>> Stashed changes
     }
 }
